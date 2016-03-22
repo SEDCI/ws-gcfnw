@@ -168,7 +168,17 @@
                             </label>
                         </div>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control" id="ocivilstatus" name="ocivilstatus" placeholder="Enter Civil Status" <?php echo $ocivil_disable; ?> value="<?php echo set_value('ocivilstatus'); ?>" />
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="ocivilstatus" name="ocivilstatus" placeholder="Enter Civil Status" <?php echo $ocivil_disable; ?> value="<?php echo set_value('ocivilstatus'); ?>" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="hobbyskill" class="control-label">Hobbies / Skills (Separated by comma):</label>
+                                <input type="text" class="form-control" id="hobbyskill" name="hobbyskill" placeholder="Enter Hobbies / Skills" value="<?php echo set_value('hobbyskill'); ?>" />
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -182,6 +192,40 @@
                             <div class="form-group">
                                 <label for="invitedby" class="control-label">Invited By:</label>
                                 <input type="text" class="form-control" id="invitedby" name="invitedby" placeholder="Enter Invited By" value="<?php echo set_value('invitedby'); ?>" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="occupation" class="control-label">Which ministr(y/ies) would you like to be involved with as a volunteer?:</label>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label>
+                                            <?php echo form_checkbox('ministry[]', '1', false, 'id="ministry1"'); ?> Praise and Worship
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label>
+                                            <?php echo form_checkbox('ministry[]', '2', false, 'id="ministry2"'); ?> Ushering
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label>
+                                            <?php echo form_checkbox('ministry[]', '3', false, 'id="ministry3"'); ?> Sunday School Teacher
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label>
+                                            <?php echo form_checkbox('ministry[]', '4', false, 'id="ministry4"'); ?> Sound Tech / Projectionist
+                                        </label>
+                                    </div>
+                                    <!--<div class="col-sm-4">
+                                        <label>
+                                            <?php echo form_checkbox('ministry[]', '0', false, 'id="ministry0"'); ?> Others
+                                        </label>
+                                    </div>-->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -260,14 +304,6 @@
                             <button type="button" class="btn btn-default addChild"><span class="glyphicon glyphicon-plus"></span> Add Child</button>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-4">
-                            <label class="control-label">Name of Child:</label>
-                        </div>
-                        <div class="col-xs-8">
-                            <label class="control-label">Birthdate:</label>
-                        </div>
-                    </div>
                     <div id="children">
 <?php
 $cnt_children = (!empty($cnt_children)) ? $cnt_children : 1;
@@ -276,12 +312,12 @@ for ($c = 0; $c < $cnt_children; $c++):
                         <div class="row" id="new-child">
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="cname0" name="cname[]" placeholder="Enter Name of Child" value="<?php echo set_value('cname[]'); ?>" />
+                                    Name of Child: <input type="text" class="form-control" id="cname0" name="cname[]" placeholder="Enter Name of Child" value="<?php echo set_value('cname[]'); ?>" />
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <input type="text" class="form-control datepicker" id="cbirthday0" name="cbirthday[]" placeholder="Enter Birthdate" value="<?php echo set_value('cbirthday[]'); ?>" />
+                                    Birthdate: <input type="text" class="form-control datepicker" id="cbirthday0" name="cbirthday[]" placeholder="Enter Birthdate" value="<?php echo set_value('cbirthday[]'); ?>" />
                                 </div>
                             </div>
                             <!--<div class="col-sm-4">
@@ -353,17 +389,17 @@ for ($c = 0; $c < $cnt_edh; $c++):
                         <div class="row" id="new-hschool">
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="hnameschool0" name="hnameschool[]" placeholder="Enter Name of School" value="<?php echo set_value('hnameschool[]'); ?>" />
+                                    Name of School: <input type="text" class="form-control" id="hnameschool0" name="hnameschool[]" placeholder="Enter Name of School" value="<?php echo set_value('hnameschool[]'); ?>" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="hcourse0" name="hcourse[]" placeholder="Enter Course" value="<?php echo set_value('hcourse[]'); ?>" />
+                                    Course: <input type="text" class="form-control" id="hcourse0" name="hcourse[]" placeholder="Enter Course" value="<?php echo set_value('hcourse[]'); ?>" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="hincyears0" name="hincyears[]" placeholder="Enter Inclusive Years" value="<?php echo set_value('hincyears[]'); ?>" />
+                                    Inclusive Years: <input type="text" class="form-control" id="hincyears0" name="hincyears[]" placeholder="Enter Inclusive Years" value="<?php echo set_value('hincyears[]'); ?>" />
                                 </div>
                             </div>
                         </div>
@@ -385,17 +421,17 @@ for ($c = 0; $c < $cnt_edc; $c++):
                         <div class="row" id="new-cschool">
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="cnameschool0" name="cnameschool[]" placeholder="Enter Name of School" value="<?php echo set_value('cnameschool[]'); ?>" />
+                                    Name of School: <input type="text" class="form-control" id="cnameschool0" name="cnameschool[]" placeholder="Enter Name of School" value="<?php echo set_value('cnameschool[]'); ?>" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="ccourse0" name="ccourse[]" placeholder="Enter Course" value="<?php echo set_value('ccourse[]'); ?>" />
+                                    Course: <input type="text" class="form-control" id="ccourse0" name="ccourse[]" placeholder="Enter Course" value="<?php echo set_value('ccourse[]'); ?>" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="cincyears0" name="cincyears[]" placeholder="Enter Inclusive Years" value="<?php echo set_value('cincyears[]'); ?>" />
+                                    Inclusive Years: <input type="text" class="form-control" id="cincyears0" name="cincyears[]" placeholder="Enter Inclusive Years" value="<?php echo set_value('cincyears[]'); ?>" />
                                 </div>
                             </div>
                         </div>
@@ -417,17 +453,17 @@ for ($c = 0; $c < $cnt_edg; $c++):
                         <div class="row" id="new-gschool">
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="gnameschool0" name="gnameschool[]" placeholder="Enter Name of School" value="<?php echo set_value('gnameschool[]'); ?>" />
+                                    Name of School: <input type="text" class="form-control" id="gnameschool0" name="gnameschool[]" placeholder="Enter Name of School" value="<?php echo set_value('gnameschool[]'); ?>" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="gcourse0" name="gcourse[]" placeholder="Enter Course" value="<?php echo set_value('gcourse[]'); ?>" />
+                                    Course: <input type="text" class="form-control" id="gcourse0" name="gcourse[]" placeholder="Enter Course" value="<?php echo set_value('gcourse[]'); ?>" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="gincyears0" name="gincyears[]" placeholder="Enter Inclusive Years" value="<?php echo set_value('gincyears[]'); ?>" />
+                                    Inclusive Years: <input type="text" class="form-control" id="gincyears0" name="gincyears[]" placeholder="Enter Inclusive Years" value="<?php echo set_value('gincyears[]'); ?>" />
                                 </div>
                             </div>
                         </div>
@@ -449,17 +485,17 @@ for ($c = 0; $c < $cnt_edp; $c++):
                         <div class="row" id="new-pschool">
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="pnameschool0" name="pnameschool[]" placeholder="Enter Name of School" value="<?php echo set_value('pnameschool[]'); ?>" />
+                                    Name of School: <input type="text" class="form-control" id="pnameschool0" name="pnameschool[]" placeholder="Enter Name of School" value="<?php echo set_value('pnameschool[]'); ?>" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="pcourse0" name="pcourse[]" placeholder="Enter Course" value="<?php echo set_value('pcourse[]'); ?>" />
+                                    Course: <input type="text" class="form-control" id="pcourse0" name="pcourse[]" placeholder="Enter Course" value="<?php echo set_value('pcourse[]'); ?>" />
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="pincyears0" name="pincyears[]" placeholder="Enter Inclusive Years" value="<?php echo set_value('pincyears[]'); ?>" />
+                                    Inclusive Years: <input type="text" class="form-control" id="pincyears0" name="pincyears[]" placeholder="Enter Inclusive Years" value="<?php echo set_value('pincyears[]'); ?>" />
                                 </div>
                             </div>
                         </div>

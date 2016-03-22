@@ -174,6 +174,14 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="hobbyskill" class="control-label">Hobbies / Skills (Separated by comma):</label>
+                            <input type="text" class="form-control" id="hobbyskill" name="hobbyskill" placeholder="Enter Hobbies / Skills" value="<?php echo $memberinfo['personal']['hobbies_skills']; ?>" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="datefirstvisit" class="control-label">Date First Visited GCF:</label>
@@ -184,6 +192,27 @@
                         <div class="form-group">
                             <label for="invitedby" class="control-label">Invited By:</label>
                             <input type="text" class="form-control" id="invitedby" name="invitedby" placeholder="Enter Invited By" value="<?php echo $memberinfo['personal']['invited_by']; ?>" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="occupation" class="control-label">Preferred Ministr(y/ies) Involvement as a Volunteer:</label>
+                            <div class="row">
+<?php foreach ($ministries as $k => $v): ?>
+                                <div class="col-sm-3">
+                                    <label>
+                                        <?php echo form_checkbox('ministry[]', $k, in_array($k, $ministry_involvement) ? true : false, 'id="ministry"'.$k); ?> <?php echo $v; ?>
+                                    </label>
+                                </div>
+<?php endforeach; ?>
+                                <!--<div class="col-sm-4">
+                                    <label>
+                                        <?php echo form_checkbox('ministry[]', '0', false, 'id="ministry0"'); ?> Others
+                                    </label>
+                                </div>-->
+                            </div>
                         </div>
                     </div>
                 </div>

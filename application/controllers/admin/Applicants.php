@@ -1,6 +1,13 @@
 <?php
 class Applicants extends MY_Controller
 {
+	private $ministries = array(
+		'1' => 'Praise and Worship',
+		'2' => 'Ushering',
+		'3' => 'Sunday School Teacher',
+		'4' => 'Sound Tech / Projectionist'
+	);
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -36,6 +43,8 @@ class Applicants extends MY_Controller
 
 		$data['applicantinfo'] = $this->applicants_model->getApplicantinfo($criteria);
 
+		$data['applicantinfo']['personal']['date_received'] = date('Y-m-d', strtotime($data['applicantinfo']['personal']['date_received']));
+
 		$civil_status = $data['applicantinfo']['personal']['civil_status'];
 
 		switch ($civil_status) {
@@ -51,7 +60,24 @@ class Applicants extends MY_Controller
 
 		$data['applicantinfo']['personal']['civil_status'] = $civil_status;
 
+		$data['applicantinfo']['personal']['ministry_involvement'] = $this->getMinistriesStrings($data['applicantinfo']['personal']['ministry_involvement']);
+
 		load_view_admin('members/applicantinfo', $data, 'members_nav');
+	}
+
+	public function getMinistriesStrings($ids)
+	{
+		if (!empty($ids)) {
+			$ids = explode(',', $ids);
+
+			foreach ($ids as $id) {
+				$ministries[] = $this->ministries[$id];
+			}
+
+			return implode(', ', $ministries);
+		}
+
+		return '';
 	}
 
 	public function approveApplication($registration_id)

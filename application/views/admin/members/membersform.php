@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-inline">
-                            Date received by Edifying Ministry: <input type="text" class="form-control datepicker" id="datereceived" name="datereceived" value="<?php echo set_value('datereceived'); ?>">
+                            Date received by Edifying Ministry: <input type="text" class="form-control datepicker" id="datereceived" name="datereceived" placeholder="YYYY-MM-DD" value="<?php echo set_value('datereceived'); ?>">
                         </div>
                     </div>
                     <div class="col-sm-2">
@@ -172,16 +172,58 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="hobbyskill" class="control-label">Hobbies / Skills (Separated by comma):</label>
+                            <input type="text" class="form-control" id="hobbyskill" name="hobbyskill" placeholder="Enter Hobbies / Skills" value="<?php echo set_value('hobbyskill'); ?>" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="datefirstvisit" class="control-label">Date First Visited GCF:</label>
-                            <input type="text" class="form-control" id="datefirstvisit" name="datefirstvisit" placeholder="Enter Date First Visited GCF" value="<?php echo set_value('datefirstvisit'); ?>" />
+                            <input type="text" class="form-control" id="datefirstvisit" name="datefirstvisit" placeholder="YYYY-MM-DD" value="<?php echo set_value('datefirstvisit'); ?>" />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label for="invitedby" class="control-label">Invited By:</label>
                             <input type="text" class="form-control" id="invitedby" name="invitedby" placeholder="Enter Invited By" value="<?php echo set_value('invitedby'); ?>" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="occupation" class="control-label">Preferred Ministr(y/ies) Involvement as a Volunteer:</label>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label>
+                                        <?php echo form_checkbox('ministry[]', '1', false, 'id="ministry1"'); ?> Praise and Worship
+                                    </label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>
+                                        <?php echo form_checkbox('ministry[]', '2', false, 'id="ministry2"'); ?> Ushering
+                                    </label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>
+                                        <?php echo form_checkbox('ministry[]', '3', false, 'id="ministry3"'); ?> Sunday School Teacher
+                                    </label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>
+                                        <?php echo form_checkbox('ministry[]', '4', false, 'id="ministry4"'); ?> Sound Tech / Projectionist
+                                    </label>
+                                </div>
+                                <!--<div class="col-sm-4">
+                                    <label>
+                                        <?php echo form_checkbox('ministry[]', '0', false, 'id="ministry0"'); ?> Others
+                                    </label>
+                                </div>-->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -271,7 +313,7 @@ for ($c = 0; $c < $cnt_children; $c++):
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <input type="text" class="form-control datepicker" id="cbirthday0" name="cbirthday[]" placeholder="Enter Birthdate" value="<?php echo set_value('cbirthday[]'); ?>" />
+                                <input type="text" class="form-control datepicker" id="cbirthday0" name="cbirthday[]" placeholder="YYYY-MM-DD" value="<?php echo set_value('cbirthday[]'); ?>" />
                             </div>
                         </div>
                         <!--<div class="col-sm-4">
@@ -351,7 +393,7 @@ for ($c = 0; $c < $cnt_edh; $c++):
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="hincyears0" name="hincyears[]" placeholder="Enter Inclusive Years" value="<?php echo set_value('hincyears[]'); ?>" />
+                                <input type="text" class="form-control" id="hincyears0" name="hincyears[]" placeholder="YYYY-MM-DD" value="<?php echo set_value('hincyears[]'); ?>" />
                             </div>
                         </div>
                     </div>
@@ -383,7 +425,7 @@ for ($c = 0; $c < $cnt_edc; $c++):
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="cincyears0" name="cincyears[]" placeholder="Enter Inclusive Years" value="<?php echo set_value('cincyears[]'); ?>" />
+                                <input type="text" class="form-control" id="cincyears0" name="cincyears[]" placeholder="YYYY-MM-DD" value="<?php echo set_value('cincyears[]'); ?>" />
                             </div>
                         </div>
                     </div>
@@ -415,7 +457,7 @@ for ($c = 0; $c < $cnt_edg; $c++):
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="gincyears0" name="gincyears[]" placeholder="Enter Inclusive Years" value="<?php echo set_value('gincyears[]'); ?>" />
+                                <input type="text" class="form-control" id="gincyears0" name="gincyears[]" placeholder="YYYY-MM-DD" value="<?php echo set_value('gincyears[]'); ?>" />
                             </div>
                         </div>
                     </div>
@@ -447,7 +489,7 @@ for ($c = 0; $c < $cnt_edp; $c++):
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="pincyears0" name="pincyears[]" placeholder="Enter Inclusive Years" value="<?php echo set_value('pincyears[]'); ?>" />
+                                <input type="text" class="form-control" id="pincyears0" name="pincyears[]" placeholder="YYYY-MM-DD" value="<?php echo set_value('pincyears[]'); ?>" />
                             </div>
                         </div>
                     </div>
