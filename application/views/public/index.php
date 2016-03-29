@@ -14,15 +14,15 @@
 
 
 
-                <div class="intro-lead-in">Make disciples of Jesus Christ in the Philippines and beyond.</div>
+                <div class="intro-lead-in"><?php echo $header_subtext; ?></div>
 
 
 
-                <div class="intro-heading" style="font-family: 'Montserrat', sans-serif; font-weight:300;">Welcome to</div>
+                <div class="intro-heading" style="font-family: 'Montserrat', sans-serif; font-weight:300;"><?php echo $header_text1; ?></div>
                 
                 
                 
-                <div class="intro-heading" style="font-family: 'Montserrat', sans-serif; margin-top: -30px;">Greenhills Christian Felowship Northwest</div>
+                <div class="intro-heading" style="font-family: 'Montserrat', sans-serif; margin-top: -30px;"><?php echo $header_text2; ?></div>
 
 
 
@@ -78,7 +78,7 @@
 
 
 
-                    <p>To know Christ and make Him known.</p><br/>
+                    <p><?php echo $mission; ?></p><br/>
 
 
 
@@ -86,7 +86,7 @@
 
 
 
-                    <p>By God's grace, we shall be a church actively engaged in making disciples and in influencing people for chirst to reach society for His glory.</p>
+                    <p><?php echo $vision; ?></p>
 
 
 
@@ -642,7 +642,7 @@
 
 
 
-                    <h3 class="section-subheading text-muted">The Worship Ministry glorifies God by prompting Christians to worship God and by helping people to know Christ and make Him known through excellent worship opportunities that are Spirit-led, biblical, dynamic and trans-cultural. It aims to promote biblically-based worship as a lifestyle among Christian and foster unbroken communion with God.</h3>
+                    <h3 class="section-subheading text-muted"><?php echo $worship_services; ?></h3>
 
 
 
@@ -690,11 +690,11 @@
 
 
 
-                                    <h4><font color="#1E824C">SUNDAY WORSHIP</font></h4>
+                                    <h4><font color="#1E824C"><?php echo $ws[0]['title']; ?></font></h4>
 
 
 
-                                    <h4 class="subheading">Regular Weekly Worship</h4>
+                                    <h4 class="subheading"><?php echo $ws[0]['description']; ?></h4>
 
 
 
@@ -706,9 +706,7 @@
 
 
 
-                                    <p style="font-weight: 800;"><b>8:00am</b> - Tagalog Service</p>
-
-                                    <p style="font-weight: 800;"><b>10:00am</b> - English Service</p>
+                                    <p style="font-weight: 800;"><?php echo $ws[0]['schedule']; ?></p>
 
 
 
@@ -748,11 +746,11 @@
 
 
 
-                                    <h4><font color="#1E824C">MIDWEEK WORSHIP</font></h4>
+                                    <h4><font color="#1E824C"><?php echo $ws[1]['title']; ?></font></h4>
 
 
 
-                                    <h4 class="subheading">Wednesdays</h4>
+                                    <h4 class="subheading"><?php echo $ws[1]['description']; ?></h4>
 
 
 
@@ -764,7 +762,7 @@
 
 
 
-                                    <p style="font-weight: 800;"><b>7:30pm</b></p>
+                                    <p style="font-weight: 800;"><?php echo $ws[1]['schedule']; ?></p>
 
 
 
@@ -804,11 +802,11 @@
 
 
 
-                                    <h4><font color="#1E824C">YOUTH WORSHIP</font></h4>
+                                    <h4><font color="#1E824C"><?php echo $ws[2]['title']; ?></font></h4>
 
 
 
-                                    <h4 class="subheading">Sundays</h4>
+                                    <h4 class="subheading"><?php echo $ws[2]['description']; ?></h4>
 
 
 
@@ -820,11 +818,8 @@
 
 
 
-                                    <p style="font-weight: 800;">Every 1st, 2nd, and 3rd Sunday of the month</p>
+                                    <p style="font-weight: 800;"><?php echo $ws[2]['schedule']; ?></p>
                                     
-                                    
-                                    
-                                    <p style="font-weight: 800;">10am</p>
 
 
 

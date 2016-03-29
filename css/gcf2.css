@@ -69,7 +69,11 @@
 	font-weight: bold;
 }
 
-.applicantinfo .info-rows {
+/*.applicantinfo .info-rows {
+	padding-bottom: 20px;
+}*/
+
+.info-rows {
 	padding-bottom: 20px;
 }
 

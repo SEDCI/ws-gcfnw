@@ -9,7 +9,12 @@ class Pages extends CI_Controller
 
 	public function showIndex()
 	{
-		$data['title'] = 'Know Christ and Make Him Known';
+		$this->load->model('home_model');
+
+		$data = $this->home_model->getInfo();
+		$data['ws'] = $this->home_model->getWorshipservices();
+
+		//$data['title'] = 'Know Christ and Make Him Known';
 
 		load_view_public('header', $data);
 
