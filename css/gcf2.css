@@ -117,3 +117,11 @@
 .adminbody h1 {
 	margin-bottom: 0px;
 }*/
+
+.info h3, .info h4 {
+	color: #008840;
+}
+
+.info h3 {
+	font-weight: bold;
+}

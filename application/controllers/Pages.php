@@ -9,12 +9,12 @@ class Pages extends CI_Controller
 
 	public function showIndex()
 	{
-		$this->load->model('home_model');
+		$this->load->model('info_model');
 
-		$data = $this->home_model->getInfo();
-		$data['ws'] = $this->home_model->getWorshipservices();
+		$data = $this->info_model->getInfo();
+		$data['ws'] = $this->info_model->getWorshipservices();
 
-		//$data['title'] = 'Know Christ and Make Him Known';
+		$data['title'] = $data['title_bar'];
 
 		load_view_public('header', $data);
 
@@ -48,6 +48,10 @@ class Pages extends CI_Controller
 
 	public function showAbout()
 	{
+		$this->load->model('info_model');
+
+		$data = $this->info_model->getInfo();
+
 		$data['title'] = 'About Greenhills Christian Fellowship';
 		$data['about_selected'] = 'nav-selected';
 

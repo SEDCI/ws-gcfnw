@@ -15,7 +15,7 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="<?php echo base_url('admin/pages/weeklymessage'); ?>">Website</a></li>
+							<li><a href="<?php echo base_url('admin/pages/info'); ?>">Website</a></li>
 							<li><a href="<?php echo base_url('admin/members'); ?>">Members</a></li>
 							<li><a href="#">Administrators</a></li>
 							<li role="separator" class="divider"></li>

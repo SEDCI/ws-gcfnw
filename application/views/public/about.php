@@ -10,7 +10,7 @@
 
                     <h1>About GCF</h2>
 
-                    <h4>Know Christ and Make Him Known</h3>
+                    <h4><?php echo $title_bar; ?></h3>
 
             	<!--
 
@@ -492,7 +492,7 @@
 
                 <div class="col-lg-12 text-center">
 
-                    <p>Greenhills Christian Fellowship, also known as GCF, is a church at the very heart of Ortigas Center, Pasig City - one of the fastest-growing commercial centers in the Philippines today. GCF has an over-all constituency of over 7,000 worshippers. GCF was born out of a New Testament heritage, assisting in the spreading of the gospel through evangelism, discipleship, and in the multiplication of churches.</p>
+                    <p><?php echo $about; ?></p>
 
                 </div>
 
@@ -508,11 +508,11 @@
 
                         <h4>Mission</h4>
 
-                        <p class="text-muted">To know Christ and make Him known.</p>
+                        <p class="text-muted"><?php echo $mission; ?></p>
                         
                         <h4>Vision</h4>
 
-                        <p class="text-muted">By God's grace, we shall be a church actively engaged in making disciples and in influencing people for chirst to reach society for His glory.</p>
+                        <p class="text-muted"><?php echo $vision; ?></p>
 
                         <!--
 
@@ -545,15 +545,12 @@
                         <img src="img/hands.jpg" width="200" class="img-responsive img-circle" alt="">
 
                         <h4>Core Values</h4>
-
-                        <p class="text-muted" style="text-align: center;">Truth basedon God's word</p>
-
-                        <p class="text-muted" style="text-align: center;">Love in all relationships</p>
-
-                        <p class="text-muted" style="text-align: center;">Excellence in life and ministry</p>
-
-                        <p class="text-muted" style="text-align: center;">Dependence on the Holy Spirit</p>
-                        
+<?php
+$cv = explode('<br>', $core_values);
+foreach ($cv as $v):
+?>
+                        <p class="text-muted" style="text-align: center;"><?php echo $v; ?></p>
+<?php endforeach; ?>
                         </ul>
                             
                     </div>
@@ -567,34 +564,28 @@
                         <img src="img/worship.jpg" width="200" class="img-responsive img-circle" alt="">
 
                         <h4>Pastoral Team</h4>
-
-                        <p class="text-muted">PTR. Anthony Arceo, Senior Pastor</p>
-                        
-                        <p class="text-muted">PTR. Jun Raynes, Youth/Enabling</p>
-                        
-                        <p class="text-muted">PTR. Gerry Agoncillo</p>
+<?php
+$pt = explode('<br>', $pastoral_team);
+foreach ($pt as $p):
+?>
+                        <p class="text-muted"><?php echo $p; ?></p>
+<?php endforeach; ?>
                         
                         <h4>Board of Elders</h4>
-
-                        <p class="text-muted">E. Peter Young / Chairman ,Youth</p>
-                        
-                        <p class="text-muted">E. Arvin Macaspac, Edifying/Engaging</p>
-                        
-                        <p class="text-muted">E. Martin Fortes, Enabling</p>
-                        
-                        <p class="text-muted">E. Antonio Tejuco, Equipping/Enlisting</p>
+<?php
+$be = explode('<br>', $board_of_elders);
+foreach ($be as $e):
+?>
+                        <p class="text-muted"><?php echo $e; ?></p>
+<?php endforeach; ?>
                         
                         <h4>Board of Deacons</h4>
-
-                        <p class="text-muted">D. Frederick Ambrosio, Edifying Ministry</p>
-                        
-                        <p class="text-muted">D. Hayward Ng, Exalting</p>
-                        
-                        <p class="text-muted">D. Ian Lana, Edifying/Children's Ministry</p>
-                        
-                        <p class="text-muted">D. Mar Alfaro, Exalting</p>
-                        
-                        <p class="text-muted">D. Benson Gapuz, Youth</p>
+<?php
+$bd = explode('<br>', $board_of_deacons);
+foreach ($bd as $d):
+?>
+                        <p class="text-muted"><?php echo $d; ?></p>
+<?php endforeach; ?>
 
                     </div>
 

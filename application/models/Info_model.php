@@ -1,5 +1,5 @@
 <?php
-class Home_model extends CI_Model
+class Info_model extends CI_Model
 {
 	public function __construct()
 	{
@@ -9,13 +9,18 @@ class Home_model extends CI_Model
 	public function getInfo()
 	{
 		$fields = array(
-			'title',
+			'title_bar',
 			'header_text1',
 			'header_text2',
 			'header_subtext',
 			'mission',
 			'vision',
-			'worship_services'
+			'worship_services',
+			'about',
+			'core_values',
+			'pastoral_team',
+			'board_of_elders',
+			'board_of_deacons'
 		);
 
 		$this->db->select($fields);
@@ -41,13 +46,18 @@ class Home_model extends CI_Model
 	public function saveInfo()
 	{
 		$data = array(
-			'title' => $this->input->post('titletxt'),
+			'title_bar' => $this->input->post('titletxt'),
 			'header_text1' => $this->input->post('hdrtxt1'),
 			'header_text2' => $this->input->post('hdrtxt2'),
 			'header_subtext' => $this->input->post('hdrsubtxt'),
 			'mission' => $this->input->post('mssn'),
 			'vision' => $this->input->post('vsn'),
-			'worship_services' => $this->input->post('wsheader')
+			'worship_services' => str_replace("\r\n", '<br>', $this->input->post('wsheader')),
+			'about' => str_replace("\r\n", '<br>', $this->input->post('abouttxt')),
+			'core_values' => str_replace("\r\n", '<br>', $this->input->post('corevalues')),
+			'pastoral_team' => str_replace("\r\n", '<br>', $this->input->post('pastoral')),
+			'board_of_elders' => str_replace("\r\n", '<br>', $this->input->post('elders')),
+			'board_of_deacons' => str_replace("\r\n", '<br>', $this->input->post('deacons'))
 		);
 
 		$this->db->update('info', $data);

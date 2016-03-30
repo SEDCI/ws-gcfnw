@@ -107,8 +107,8 @@ $route['admin/applications/view/(:any)'] = 'admin/applicants/viewApplication/$1'
 $route['admin/applications/approve/(:any)'] = 'admin/applicants/approveApplication/$1';
 $route['admin/applications/reject/(:any)'] = 'admin/applicants/rejectApplication/$1';
 
-$route['admin/pages/home'] = 'admin/home/viewInfo';
-$route['admin/pages/home/edit'] = 'admin/home/editInfo';
+$route['admin/pages/info'] = 'admin/info/viewInfo';
+$route['admin/pages/info/edit'] = 'admin/info/editInfo';
 
 $route['admin/pages/events'] = 'admin/events/showList';
 $route['admin/pages/events/view/(:any)'] = 'admin/events/viewEvent/$1';
