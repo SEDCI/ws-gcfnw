@@ -13,6 +13,8 @@ class Applicants_model extends CI_Model
 		*/
 		$last_application = $this->getLastapplication();
 		$registration_number = (count($last_application) > 0) ? $last_application['registration_number'] + 1 : 1;
+		$date_married = (empty($this->input->post('dmmonth')) && empty($this->input->post('dmday')) && empty($this->input->post('dmyear'))) ? null : nice_date($this->input->post('dmmonth').'-'.$this->input->post('dmday').'-'.$this->input->post('dmyear'), 'Y-m-d');
+		$s_birthdate = (empty($this->input->post('sbdmonth')) && empty($this->input->post('sbdday')) && empty($this->input->post('sbdyear'))) ? null : nice_date($this->input->post('sbdmonth').'-'.$this->input->post('sbdday').'-'.$this->input->post('sbdyear'), 'Y-m-d');
 		$civil_status_others = ($this->input->post('civilstatus') == 'O') ? $this->input->post('ocivilstatus') : '';
 
 		$personal_info = array(
@@ -35,14 +37,16 @@ class Applicants_model extends CI_Model
 			'office_email' => $this->input->post('officeemail'),
 			'civil_status' => $this->input->post('civilstatus'),
 			'civil_status_others' => $civil_status_others,
+			'hobbies_skills' => $this->input->post('hobbyskill'),
 			'date_first_visit' => $this->input->post('datefirstvisit'),
 			'invited_by' => $this->input->post('invitedby'),
+			'ministry_involvement' => implode(',', $this->input->post('ministry')),
 			's_last_name' => $this->input->post('slastname'),
 			's_first_name' => $this->input->post('sfirstname'),
 			's_middle_name' => $this->input->post('smiddlename'),
 			's_nick_name' => $this->input->post('snickname'),
-			'date_married' => nice_date($this->input->post('dmmonth').'-'.$this->input->post('dmday').'-'.$this->input->post('dmyear'), 'Y-m-d'),
-			's_birthdate' => nice_date($this->input->post('sbdmonth').'-'.$this->input->post('sbdday').'-'.$this->input->post('sbdyear'), 'Y-m-d'),
+			'date_married' => $date_married,
+			's_birthdate' => $s_birthdate,
 			'father_name' => $this->input->post('fathername'),
 			'father_age' => $this->input->post('fatherage'),
 			'mother_name' => $this->input->post('mothername'),
@@ -103,11 +107,11 @@ class Applicants_model extends CI_Model
 		*/
 		$religious = array(
 			'm_personal_id' => $m_personal_id,
-			'bg1_when' => nice_date($this->input->post('rel1when'), 'Y-m-d'),
+			'bg1_when' => ($this->input->post('rel1when')) ? nice_date($this->input->post('rel1when'), 'Y-m-d') : '',
 			'bg1_where' => $this->input->post('rel1where'),
 			'bg1_whom' => $this->input->post('rel1whom'),
 			'bg2_yesno' => $this->input->post('rel2yesno'),
-			'bg2_when' => nice_date($this->input->post('rel2when'), 'Y-m-d'),
+			'bg2_when' => ($this->input->post('rel2when')) ? nice_date($this->input->post('rel2when'), 'Y-m-d') : '',
 			'bg2_where' => $this->input->post('rel2where'),
 			'bg2_minister' => $this->input->post('rel2minister'),
 			'bg3_church' => $this->input->post('rel3church'),

@@ -111,17 +111,27 @@
                 </div>
             </div>
             <div class="row info-rows">
-                <div class="col-sm-4">
+                <div class="col-sm-6">
                     <div><label>Civil Status:</label></div>
                     <div><?php echo $memberinfo['personal']['civil_status']; ?></div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-6">
+                    <div><label>Hobbies / Skills:</label></div>
+                    <div><?php echo $memberinfo['personal']['hobbies_skills']; ?></div>
+                </div>
+            </div>
+            <div class="row info-rows">
+                <div class="col-sm-3">
                     <div><label>Date First Visited GCF:</label></div>
                     <div><?php echo $memberinfo['personal']['date_first_visit']; ?></div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div><label>Invited By:</label></div>
                     <div><?php echo $memberinfo['personal']['invited_by']; ?></div>
+                </div>
+                <div class="col-sm-6">
+                    <div><label>Preferred Ministr(y/ies) Involvement as a Volunteer:</label></div>
+                    <div><?php echo $memberinfo['personal']['ministry_involvement']; ?></div>
                 </div>
             </div>
             <div class="row">
