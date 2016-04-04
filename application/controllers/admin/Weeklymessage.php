@@ -49,6 +49,7 @@ class Weeklymessage extends MY_Controller
 				$ppt_filename = '';
 				$ios_filename = '';
 				$pdf_filename = '';
+				$doc_filename = '';
 
 				$config['upload_path'] = './files/weeklymessage/';
 				$config['file_ext_tolower'] = true;
@@ -90,6 +91,18 @@ class Weeklymessage extends MY_Controller
 					}
 				}
 
+				if ($_FILES['wmfiledoc']['name'] != '' && $_FILES['wmfiledoc']['size'] > 0) {
+					$config['allowed_types'] = 'doc|docx';
+
+					$this->upload->initialize($config);
+
+					if (!$this->upload->do_upload('wmfiledoc')) {
+						$upload_error['doc'] = $this->upload->display_errors();
+					} else {
+						$doc_filename = $this->upload->data('file_name');
+					}
+				}
+
 				if (empty($upload_error)) {
 					$message_data = array(
 						'verse' => $this->input->post('wmverse'),
@@ -97,6 +110,7 @@ class Weeklymessage extends MY_Controller
 						'ppt_file' => $ppt_filename,
 						'ios_file' => $ios_filename,
 						'pdf_file' => $pdf_filename,
+						'doc_file' => $doc_filename,
 						'date_added' => date('Y-m-d H:i:s')
 					);
 
@@ -136,6 +150,7 @@ class Weeklymessage extends MY_Controller
 				$ppt_filename = $data['message']['ppt_file'];
 				$ios_filename = $data['message']['ios_file'];
 				$pdf_filename = $data['message']['pdf_file'];
+				$doc_filename = $data['message']['doc_file'];
 
 				$config['upload_path'] = './files/weeklymessage/';
 				$config['file_ext_tolower'] = true;
@@ -158,7 +173,10 @@ class Weeklymessage extends MY_Controller
 							$ppt_filename = $this->upload->data('file_name');
 						}
 					} else {
-						unlink($config['upload_path'].$ppt_filename);
+						if (!empty($ppt_filename)) {
+							unlink($config['upload_path'].$ppt_filename);
+						}
+
 						$ppt_filename = '';
 					}
 				}
@@ -179,7 +197,10 @@ class Weeklymessage extends MY_Controller
 							$ios_filename = $this->upload->data('file_name');
 						}
 					} else {
-						unlink($config['upload_path'].$ios_filename);
+						if (!empty($ios_filename)) {
+							unlink($config['upload_path'].$ios_filename);
+						}
+
 						$ios_filename = '';
 					}
 				}
@@ -200,8 +221,35 @@ class Weeklymessage extends MY_Controller
 							$pdf_filename = $this->upload->data('file_name');
 						}
 					} else {
-						unlink($config['upload_path'].$pdf_filename);
+						if (!empty($pdf_filename)) {
+							unlink($config['upload_path'].$pdf_filename);
+						}
+
 						$pdf_filename = '';
+					}
+				}
+
+				/**
+				 * Upload/Remove Word Document
+				 *
+				 */
+				if (isset($_FILES['wmfiledoc'])) {
+					if ($_FILES['wmfiledoc']['name'] != '' && $_FILES['wmfiledoc']['size'] > 0) {
+						$config['allowed_types'] = 'doc|docx';
+
+						$this->upload->initialize($config);
+
+						if (!$this->upload->do_upload('wmfiledoc')) {
+							$upload_error['doc'] = $this->upload->display_errors();
+						} else {
+							$doc_filename = $this->upload->data('file_name');
+						}
+					} else {
+						if (!empty($doc_filename)) {
+							unlink($config['upload_path'].$doc_filename);
+						}
+
+						$doc_filename = '';
 					}
 				}
 
@@ -211,7 +259,8 @@ class Weeklymessage extends MY_Controller
 						'content' => $this->input->post('wmmessage'),
 						'ppt_file' => $ppt_filename,
 						'ios_file' => $ios_filename,
-						'pdf_file' => $pdf_filename
+						'pdf_file' => $pdf_filename,
+						'doc_file' => $doc_filename
 					);
 
 					$this->weeklymessage_model->updateMessage($message_id, $message_data);
@@ -250,6 +299,10 @@ class Weeklymessage extends MY_Controller
 
 		if (!empty($message_data['pdf_file'])) {
 			unlink('./files/weeklymessage/'.$message_data['pdf_file']);
+		}
+
+		if (!empty($message_data['doc_file'])) {
+			unlink('./files/weeklymessage/'.$message_data['doc_file']);
 		}
 
 		redirect('admin/pages/weeklymessage');

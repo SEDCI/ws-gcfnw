@@ -63,6 +63,18 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <label>DOC:</label>
+                    <div class="current-file" id="doc"><span>Current File: </span>
+<?php if ($message['doc_file']): ?>
+                        <a href="<?php echo base_url('files/weeklymessage/'.$message['doc_file']); ?>" target="_blank"><?php echo $message['doc_file']; ?></a>
+<?php else: ?>
+                        <span>N/A</span>
+<?php endif; ?>
+                    </div>
+                </div>
+            </div>
             <br />
             <div class="row">
                 <div class="col-sm-12">

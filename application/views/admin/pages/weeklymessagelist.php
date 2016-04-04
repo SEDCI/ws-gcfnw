@@ -55,6 +55,13 @@ foreach ($allmessages as $message):
 								</div>
 							</div>
 <?php endif; ?>
+<?php if (!empty($message['doc_file'])) : ?>
+							<div class="row">
+								<div class="col-sm-12">
+									<a href="<?php echo base_url('files/weeklymessage/'.$message['doc_file']); ?>" target="_blank"><?php echo $message['doc_file']; ?></a>
+								</div>
+							</div>
+<?php endif; ?>
 						</td>
 						<td><?php echo date('F j, Y', strtotime($message['date_added'])); ?></td>
 						<!--<td><a href="#" data-toggle="modal" data-target="#commentslist"><?php echo $message['comments_count']; ?></a></td>-->

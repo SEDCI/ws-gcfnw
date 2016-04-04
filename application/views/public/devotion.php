@@ -16,6 +16,7 @@
                     <?php if (!empty($message['ppt_file'])) : ?><a class="btn btn-lg btn-danger" title="Download Powerpoint Presentation" href="<?php echo base_url('files/weeklymessage/'.$message['ppt_file']); ?>" target="_blank"><div><span class="glyphicon glyphicon-download-alt"></span> Download Powerpoint File</div></a><?php endif; ?>
                     <?php if (!empty($message['ios_file'])) : ?><a class="btn btn-lg btn-danger" title="Download Presentation For iOS" href="<?php echo base_url('files/weeklymessage/'.$message['ios_file']); ?>" target="_blank"><div><span class="glyphicon glyphicon-download-alt"></span> Download For iOS</div></a><?php endif; ?>
                     <?php if (!empty($message['pdf_file'])) : ?><a class="btn btn-lg btn-danger" title="Download PDF" href="<?php echo base_url('files/weeklymessage/'.$message['pdf_file']); ?>" target="_blank"><div><span class="glyphicon glyphicon-download-alt"></span> Download PDF File</div></a><?php endif; ?>
+                    <?php if (!empty($message['doc_file'])) : ?><a class="btn btn-lg btn-danger" title="Download Word File" href="<?php echo base_url('files/weeklymessage/'.$message['doc_file']); ?>" target="_blank"><div><span class="glyphicon glyphicon-download-alt"></span> Download Word File</div></a><?php endif; ?>
                 </div>
             </div>
             <br />

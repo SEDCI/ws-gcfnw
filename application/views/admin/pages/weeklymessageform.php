@@ -56,6 +56,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="wmfiledoc" class="control-label">Word:</label> <?php echo form_error('wmfiledoc', '<span class="form-error">- ', '</span>'); ?>
+                            <input type="file" id="wmfiledoc" name="wmfiledoc" />
+                        </div>
+                    </div>
+                </div>
                 <br />
                 <div class="row info-rows">
                     <div class="col-sm-12">

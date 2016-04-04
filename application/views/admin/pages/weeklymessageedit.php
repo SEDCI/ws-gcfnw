@@ -69,6 +69,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>DOC:</label>
+<?php if ($message['doc_file']): ?>
+                            <div class="current-file" id="doc"><span>Current File: </span><a href="<?php echo base_url('files/weeklymessage/'.$message['doc_file']); ?>" target="_blank"><?php echo $message['doc_file']; ?></a>&nbsp;&nbsp;<a href="#" class="remove-file" title="Remove File"><span class="glyphicon glyphicon-remove"></span></a></div>
+<?php else: ?>
+                            <input type="file" id="wmfiledoc" name="wmfiledoc" />
+<?php endif; ?>
+                        </div>
+                    </div>
+                </div>
                 <br />
                 <div class="row info-rows">
                     <div class="col-sm-12">
