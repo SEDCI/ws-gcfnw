@@ -110,6 +110,11 @@ $route['admin/applications/reject/(:any)'] = 'admin/applicants/rejectApplication
 $route['admin/pages/info'] = 'admin/info/viewInfo';
 $route['admin/pages/info/edit'] = 'admin/info/editInfo';
 
+$route['admin/pages/gallery'] = 'admin/gallery/showGallery';
+$route['admin/pages/gallery/view/(:any)'] = 'admin/gallery/viewAlbum/$1';
+$route['admin/pages/gallery/add'] = 'admin/gallery/addAlbum';
+$route['admin/pages/gallery/view/(:any)/upload'] = 'admin/gallery/uploadPhotos/$1';
+
 $route['admin/pages/events'] = 'admin/events/showList';
 $route['admin/pages/events/view/(:any)'] = 'admin/events/viewEvent/$1';
 $route['admin/pages/events/add'] = 'admin/events/addEvent';

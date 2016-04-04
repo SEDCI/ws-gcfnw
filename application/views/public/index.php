@@ -1312,7 +1312,8 @@
 
 
 
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.1830120934083!2d121.05892361537356!3d14.588645181279524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c819e18cc0db%3A0xcd92934dcbbba736!2sGreenhills+Christian+Fellowship!5e0!3m2!1sen!2sph!4v1450246965247" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.963568575382!2d121.01217531484097!3d14.658008989765959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b7baa6a30dd1%3A0x31eb4762326c08cc!2sGreenhills+Christian+Fellowship+Northwest!5e0!3m2!1sen!2s!4v1459749487816" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                    <!--<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.1830120934083!2d121.05892361537356!3d14.588645181279524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c819e18cc0db%3A0xcd92934dcbbba736!2sGreenhills+Christian+Fellowship!5e0!3m2!1sen!2sph!4v1450246965247" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>-->
 
 
 

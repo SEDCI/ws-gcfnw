@@ -107,3 +107,50 @@ $('.remove-comment').on('click', function(){ // THIS IS WHERE YOU LEFT OFF
 
 	return false;
 });
+
+$('.gallery .addpic').on('click', function() {
+	$('#albumpic').click();
+});
+
+$('#albumpic').on('change', function() {
+	uploadPic($('#formupload').serialize());
+});
+
+function uploadPic(files) {
+	//var files = $('#albumpic').files.length;
+	alert(files);
+	var url_segments = window.location.href.split('/');
+	var slug = url_segments[url_segments.length -1]
+
+	$('#upload').modal('show');
+
+	$.ajax({
+		xhr: function() {
+			var xhr = new window.XMLHttpRequest();
+
+			xhr.upload.addEventListener("progress", function(evt) {
+				if (evt.lengthComputable) {
+					var percentComplete = evt.loaded / evt.total;
+					percentComplete = parseInt(percentComplete * 100);
+					console.log(percentComplete);
+
+					if (percentComplete === 100) {
+
+					}
+				}
+			}, false);
+
+			return xhr;
+		},
+		url: 'upload',
+		type: "POST",
+		enctype: 'multipart/form-data',
+		//data: JSON.stringify(files[0]),
+		data: { 'albumpic' : files, 'slug' : slug },
+		contentType: "application/json",
+		dataType: "json",
+		success: function(result) {
+			console.log(result);
+		}
+	});
+}

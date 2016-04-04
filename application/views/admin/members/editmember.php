@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-inline">
-                            Date received by Edifying Ministry: <input type="text" class="form-control datepicker" id="datereceived" name="datereceived" value="<?php echo $memberinfo['personal']['date_received']; ?>">
+                            Date received by Edifying Ministry: <input type="text" class="form-control datepicker" id="datereceived" name="datereceived" value="<?php echo nice_date($memberinfo['personal']['date_received'], 'Y-m-d'); ?>">
                         </div>
                     </div>
                     <div class="col-sm-2">

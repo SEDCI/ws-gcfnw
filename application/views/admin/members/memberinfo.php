@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-inline">
-                        <div><label>Date received by Edifying Ministry:</label></div><div><?php echo $memberinfo['personal']['date_received']; ?></div>
+                        <div><label>Date received by Edifying Ministry:</label></div><div><?php echo nice_date($memberinfo['personal']['date_received'], 'Y-m-d'); ?></div>
                     </div>
                 </div>
                 <div class="col-sm-2">
