@@ -62,6 +62,8 @@ $route['events'] = 'pages/showEvents';
 $route['requests'] = 'pages/showRequests';
 $route['about'] = 'pages/showAbout';
 
+$route['contactus'] = 'pages/sendMessage';
+
 $route['devotion'] = 'pages/showDevotion';
 $route['devotion/comment/post'] = 'pages/postWMcomment';
 
