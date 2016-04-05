@@ -18,11 +18,6 @@
                     </div>
                     <div class="col-sm-2">
                         <label>
-                            <input type="radio" name="applicationtype" value="B" <?php echo set_radio('applicationtype', 'B', TRUE); ?>> for baptism
-                        </label>
-                    </div>
-                    <div class="col-sm-2">
-                        <label>
                             <input type="radio" name="applicationtype" value="T" <?php echo set_radio('applicationtype', 'T'); ?>> transferee
                         </label>
                     </div>

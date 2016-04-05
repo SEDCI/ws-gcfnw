@@ -20,11 +20,6 @@
                     </div>
                     <div class="col-sm-2">
                         <label>
-                            <input type="radio" name="applicationtype" value="B"<?php echo ($memberinfo['personal']['application_type'] == 'B') ? ' checked="checked"' : ''; ?>> for baptism
-                        </label>
-                    </div>
-                    <div class="col-sm-2">
-                        <label>
                             <input type="radio" name="applicationtype" value="T"<?php echo ($memberinfo['personal']['application_type'] == 'T') ? ' checked="checked"' : ''; ?>> transferee
                         </label>
                     </div>

@@ -18,9 +18,6 @@
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    <span class="glyphicon <?php echo ($memberinfo['personal']['application_type'] == 'B') ? 'glyphicon-check' : 'glyphicon-unchecked'; ?>"></span> <label>for baptism</label>
-                </div>
-                <div class="col-sm-2">
                     <span class="glyphicon <?php echo ($memberinfo['personal']['application_type'] == 'T') ? 'glyphicon-check' : 'glyphicon-unchecked'; ?>"></span> <label>transferee</label>
                 </div>
                 <div class="col-sm-2">
