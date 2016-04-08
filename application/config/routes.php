@@ -62,6 +62,9 @@ $route['events'] = 'pages/showEvents';
 $route['requests'] = 'pages/showRequests';
 $route['about'] = 'pages/showAbout';
 
+$route['pastormessage/update'] = 'pages/updatePastormessage';
+$route['prayerrequest/send'] = 'pages/sendPrayerrequest';
+
 $route['contactus'] = 'pages/sendMessage';
 
 $route['devotion'] = 'pages/showDevotion';
@@ -130,3 +133,8 @@ $route['admin/pages/weeklymessage/edit/(:any)'] = 'admin/weeklymessage/editMessa
 $route['admin/pages/weeklymessage/delete/(:any)'] = 'admin/weeklymessage/removeMessage/$1';
 $route['admin/pages/weeklymessage/comments/(:any)'] = 'admin/weeklymessage/showComments/$1';
 $route['admin/pages/weeklymessage/comments/delete/(:any)'] = 'admin/weeklymessage/removeComment/$1';
+
+$route['admin/users'] = 'admin/users/showUsers';
+$route['admin/users/view/(:any)'] = 'admin/users/viewUser/$1';
+$route['admin/users/edit/(:any)'] = 'admin/users/editUser/$1';
+$route['admin/users/delete/(:any)'] = 'admin/users/removeMember/$1';

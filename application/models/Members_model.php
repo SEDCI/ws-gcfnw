@@ -179,9 +179,10 @@ class Members_model extends CI_Model
 			'm_personal_id' => $m_personal_id,
 			'email' => $this->input->post('emailaddress'),
 			//'password' => password_hash($password, PASSWORD_BCRYPT, array('salt' => GCF_SALT)),
+			'level' => 2,
+			'status' => 'A',
 			'registered_date' => date('Y-m-d H:i:s'),
-			'registered_by' => $this->session->userdata('adminuser'),
-			'verification_date' => '0000-00-00 00:00:00'
+			'registered_by' => $this->session->userdata('adminuser')
 		);
 
 		$this->db->insert('users', $user_data);
@@ -221,7 +222,7 @@ class Members_model extends CI_Model
 			'place_of_birth' => $this->input->post('placeofbirth'),
 			'home_number' => $this->input->post('homenumber'),
 			'cellphone' => $this->input->post('cellphone'),
-			'email_address' => $this->input->post('emailaddress'),
+			//'email_address' => $this->input->post('emailaddress'),
 			'company_office' => $this->input->post('companyoffice'),
 			'occupation' => $this->input->post('occupation'),
 			'office_number' => $this->input->post('officenumber'),

@@ -31,18 +31,22 @@ class Auth extends CI_Controller
 		if ($this->form_validation->run() === true) {
 			$criteria = array(
 				'email' => $this->input->post('useremail'),
-				'password' => password_hash($this->input->post('userpass'), PASSWORD_BCRYPT, array('salt' => GCF_SALT))
+				'password' => password_hash($this->input->post('userpass'), PASSWORD_BCRYPT, array('salt' => GCF_SALT)),
+				'a.status' => 'A',
+				'b.status' => 'A'
 			);
 
 			$user = $this->users_model->getUser($criteria);
 
 			if (!empty($user)) {
 				$userdata = array(
+					'memberid' => $user['m_personal_id'],
 					'memberuser' => $this->input->post('useremail'),
 					'membershipid' => $user['membership_id'],
 					'firstname' => $user['first_name'],
 					'middlename' => $user['middle_name'],
-					'lastname' => $user['last_name']
+					'lastname' => $user['last_name'],
+					'level' => $user['level']
 				);
 
 				$this->session->set_userdata($userdata);

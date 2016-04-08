@@ -5,6 +5,8 @@ class Pages extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->helper('loadview');
+		$this->load->helper('date');
+		$this->load->model('pastorcorner_model');
 	}
 
 	public function showIndex()
@@ -15,6 +17,18 @@ class Pages extends CI_Controller
 		$data['ws'] = $this->info_model->getWorshipservices();
 
 		$data['title'] = $data['title_bar'];
+
+		if ($this->session->userdata('memberid') != '') {
+			$options = array(
+				'order_by' => 'date_added DESC',
+				'where' => array(
+					'date_added >=' => 'DATE_SUB(date_added, INTERVAL 7 DAYS)'
+				)
+			);
+
+			$data['pcorner'] = $this->pastorcorner_model->getMessage();
+			$data['prequests'] = $this->pastorcorner_model->getPrayerrequests(array('order_by' => 'date_added DESC'));
+		}
 
 		load_view_public('header', $data);
 
@@ -133,5 +147,92 @@ class Pages extends CI_Controller
 		$headers .= "Reply-To: $email_address";
 		mail($to,$email_subject,$email_body,$headers);
 		return true;
+	}
+
+	public function updatePastormessage()
+	{
+		$return['status_code'] = '404';
+
+		if ($this->session->userdata('memberid') != '' && $this->session->userdata('level') == '1') {
+			$this->load->library('form_validation');
+
+			$return['status_code'] = '405';
+
+			if ($this->input->post()) {
+				$this->form_validation->set_rules('pheart', 'pheart', 'trim|max_length[1000]');
+
+				if ($this->form_validation->run() === true) {
+					$data = array(
+						'm_personal_id' => $this->session->userdata('memberid'),
+						'message' => str_replace(array("\r\n", "\n", "\r"), '<br>', $this->input->post('pheart')),
+						'date_updated' => date('Y-m-d H:i:s')
+					);
+
+					$this->pastorcorner_model->saveMessage($data, array('id' => '1'));
+				}
+
+				$return['status_code'] = '200';
+			}
+		}
+
+		echo json_encode($return);
+	}
+
+	public function sendPrayerrequest()
+	{
+		$return['status_code'] = '404';
+		$return['form_error'] = '';
+
+		if ($this->session->userdata('memberid') != '' && $this->session->userdata('level') == '2') {
+			$this->load->library('form_validation');
+
+			$return['status_code'] = '405';
+
+			if ($this->input->post()) {
+				$this->form_validation->set_rules('prcontent', 'prcontent', 'trim|required|max_length[1000]');
+
+				if ($this->form_validation->run() === true) {
+					$data = array(
+						'm_personal_id' => $this->session->userdata('memberid'),
+						'message' => $this->input->post('prcontent'),
+						'date_added' => date('Y-m-d H:i:s')
+					);
+
+					$this->pastorcorner_model->savePrayerrequests($data);
+					$this->emailPrayerrequest($data['message']);
+				} else {
+					$return['form_error'] = form_error('prcontent');
+				}
+
+				$return['status_code'] = '200';
+			}
+		}
+
+		echo json_encode($return);
+	}
+
+	public function emailPrayerrequest($message)
+	{
+		$this->load->library('email');
+
+		$send_to = array(
+			/*'anthony.arceo@gcfnw.org',
+			'gerry.agoncillo@gcfnw.org',
+			'jun.raynes@gcfnw.org'*/
+			'rocky.borlaza@southeasterndatacenter.com',
+			'rocky_borlaza@yahoo.com',
+			'rdborlaza@gmail.com'
+		);
+
+		$name = $this->session->userdata('firstname').' '.$this->session->userdata('lastname');
+
+		$message = "Dear Pastors,\n\n".'Here is a prayer request from our member, '.$name.":\n\n".'"'.$message.'"';
+
+		$this->email->from('no-reply@gcfnw.org');
+		$this->email->to($send_to);
+		$this->email->reply_to($this->session->userdata('memberuser'));
+		$this->email->subject('New Prayer Request from a Member');
+		$this->email->message($message);
+		$this->email->send();
 	}
 }

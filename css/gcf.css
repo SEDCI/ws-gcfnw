@@ -62,3 +62,7 @@
 /*.wm-comments h4, .wm-comments h5, .wm-comments p {
 	color: #FFFFFF;
 }*/
+
+#sidebtn #epcmsg {
+	display: none;
+}

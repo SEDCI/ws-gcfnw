@@ -163,7 +163,7 @@ class Weeklymessage extends MY_Controller
 				 */
 				if (isset($_FILES['wmfileppt'])) {
 					if ($_FILES['wmfileppt']['name'] != '' && $_FILES['wmfileppt']['size'] > 0) {
-						$config['allowed_types'] = 'ppt';
+						$config['allowed_types'] = 'ppt|pptx';
 
 						$this->upload->initialize($config);
 

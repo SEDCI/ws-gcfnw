@@ -17,7 +17,7 @@
 						<ul class="dropdown-menu">
 							<li><a href="<?php echo base_url('admin/pages/info'); ?>">Website</a></li>
 							<li><a href="<?php echo base_url('admin/members'); ?>">Members</a></li>
-							<li><a href="#">Administrators</a></li>
+							<li><a href="<?php echo base_url('admin/users'); ?>">Accounts</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="#">Settings</a></li>
 						</ul>
