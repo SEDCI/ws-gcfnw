@@ -65,7 +65,7 @@ $route['about'] = 'pages/showAbout';
 $route['pastormessage/update'] = 'pages/updatePastormessage';
 $route['prayerrequest/send'] = 'pages/sendPrayerrequest';
 
-$route['contactus'] = 'pages/sendMessage';
+$route['contactus/send'] = 'pages/sendMessage';
 
 $route['devotion'] = 'pages/showDevotion';
 $route['devotion/comment/post'] = 'pages/postWMcomment';

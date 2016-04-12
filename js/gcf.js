@@ -113,12 +113,34 @@ $('.gallery .addpic').on('click', function() {
 });
 
 $('#albumpic').on('change', function() {
-	uploadPic($('#formupload').serialize());
+	$('#uploadform').submit();
 });
 
-function uploadPic(files) {
-	//var files = $('#albumpic').files.length;
-	alert(files);
+$('#uploadform').on('submit', function(e) {
+	var fdata = new FormData(this);
+	var inputfile = document.getElementById('albumpic');
+	var files = inputfile.files;
+
+	fdata.append('albumpic', files);
+
+	uploadPic(fdata);
+
+	e.preventDefault();
+});
+
+$('#upload').on('hide.bs.modal', function() {
+	$('#upload .modal-title').html('');
+	$('#upload .progress').toggle();
+	$('#uploadmsg').html('');
+	$('#upload .modal-footer').toggle();
+	$('.progress-bar').css({ 'width' : '0%' })
+});
+
+$('#upload').on('show.bs.modal', function() {
+	$('#upload .modal-title').html('Uploading photos...');
+});
+
+function uploadPic(formdata) {
 	var url_segments = window.location.href.split('/');
 	var slug = url_segments[url_segments.length -1]
 
@@ -132,25 +154,32 @@ function uploadPic(files) {
 				if (evt.lengthComputable) {
 					var percentComplete = evt.loaded / evt.total;
 					percentComplete = parseInt(percentComplete * 100);
-					console.log(percentComplete);
+
+					$('.progress-bar').css({ 'width' : percentComplete + '%' })
 
 					if (percentComplete === 100) {
-
+						//$('#upload').modal('hide');
 					}
 				}
 			}, false);
 
 			return xhr;
 		},
-		url: 'upload',
+		url: slug +'/upload',
 		type: "POST",
-		enctype: 'multipart/form-data',
-		//data: JSON.stringify(files[0]),
-		data: { 'albumpic' : files, 'slug' : slug },
-		contentType: "application/json",
+		data: formdata,
+		//contentType: "application/json",
 		dataType: "json",
+		processData: false,
+		contentType: false,
 		success: function(result) {
-			console.log(result);
+			var upload_success = '<div class="alert alert-success">' + result.uploaded + ' photos successfully uploaded.</div>';
+			var upload_failed = (result.failed != '') ? '<div class="alert alert-danger">' + result.failed.join('<br>') + '</div>' : '';
+
+			$('#upload .modal-title').html('Upload finished!');
+			$('#upload .progress').toggle();
+			$('#uploadmsg').html(upload_success + upload_failed);
+			$('#upload .modal-footer').toggle();
 		}
 	});
 }

@@ -113,6 +113,7 @@
 .remove-file, .remove-comment {
 	color: #CC0000;
 }
+
 /*
 .adminbody h1 {
 	margin-bottom: 0px;
@@ -136,6 +137,10 @@
 	background-color: #008840;
 }
 
-.gallery [type="file"] {
+.gallery #fileupload {
 	visibility: hidden;
+}
+
+#upload .modal-footer {
+	display: none;
 }

@@ -63,79 +63,96 @@ class Gallery extends MY_Controller
 
 		$data['album'] = $this->gallery_model->getAlbum($slug);
 		$data['title'] = $data['album']['title'];
-//		print_r($data);
-//		exit;
+
 		$data['photos'] = $this->gallery_model->getPhotos($data['album']['id']);
 		$data['photos_count'] = count($data['photos']);
+
+		$data['picsperline'] = 4;
 
 		load_view_admin('gallery/viewphotos', $data, 'pages_nav');
 	}
 
 	public function uploadPhotos($slug)
 	{
-		if (isset($_FILES['albumpic'])) {
-			$imgtypes = array(
-				'image/jpeg',
-				'image/png',
-				'image/gif',
-				'image/bmp'
-			);
+		if ($this->input->post()) {
+			$upload_ctr = 0;
 
-			$config['upload_path'] = './img/gallery/'.$slug.'/';
-			$config['file_ext_tolower'] = true;
-			$config['encrypt_name'] = true;
+			if (isset($_FILES['albumpic'])) {
+				$imgtypes = array(
+					'image/jpeg',
+					'image/png',
+					'image/gif',
+					'image/bmp'
+				);
 
-			//$upload_data = array();
-			$upload_error = array();
+				$config['upload_path'] = './img/gallery/'.$slug.'/';
+				$config['file_ext_tolower'] = true;
+				$config['encrypt_name'] = true;
 
-			$album_id = $this->gallery_model->getAlbum($slug, 'id');
+				//$upload_data = array();
+				$upload_error = array();
 
-			$albumpic = $_FILES['albumpic'];
+				$album_id = $this->gallery_model->getAlbum($slug, 'id');
 
-			foreach ($albumpic['name'] as $k => $v) {
-				if ($albumpic['size'][$k] > 0 && in_array($albumpic['type'][$k], $imgtypes)) {
-					$file['name'] = $v;
-					$file['tmp_name'] = $albumpic['tmp_name'][$k];
+				$albumpic = $_FILES['albumpic'];
 
-					$upload_data = $this->uploadPhoto($file, $config);
+				foreach ($albumpic['name'] as $k => $v) {
+					if ($albumpic['size'][$k] > 0 && in_array($albumpic['type'][$k], $imgtypes)) {
+						$file['name'] = $v;
+						$file['tmp_name'] = $albumpic['tmp_name'][$k];
 
-					if ($upload_data['success']) {
-						$this->gallery_model->savePhoto($album_id, $upload_data['file_name']);
+						$upload_data = $this->uploadPhoto($file, $config);
+
+						if ($upload_data['success']) {
+							$this->gallery_model->savePhoto($album_id['id'], $upload_data['file_name']);
+							$upload_ctr++;
+						}
+					} else {
+						$upload_error[] = $v.' - Invalid file.';
 					}
-				} else {
-					$upload_error[$k] = 'Invalid file.';
 				}
+
+				$return = array(
+					'status_code' => '200',
+					'uploaded' => $upload_ctr,
+					'failed' => $upload_error
+				);
 			}
+		} else {
+			$return = array(
+				'status_code' => '405'
+			);
 		}
+
+		echo json_encode($return);
 	}
 
 	public function uploadPhoto($file, $config)
 	{
-		$file_extension = end(explode('.', $file['name']));
+		$arr_filename = explode('.', $file['name']);
+		$file_extension = end($arr_filename);
+
+		$upload_data = array(
+			'success' => false
+		);
 
 		if ($config['file_ext_tolower']) {
 			$file_extension = strtolower($file_extension);
 		}
 
 		if ($config['encrypt_name']) {
-			$encrypted_file_name = md5($file['name'].date('YmdHis'));
+			$encrypted_file_name = md5($file['name'].date('YmdHis')).'.'.$file_extension;
 		}
 
-		$file_name = $config['upload_path'].$encrypted_file_name.'.'.$file_extension;
+		$file_name = $config['upload_path'].$encrypted_file_name;
 
 		if (move_uploaded_file($file['tmp_name'], $file_name)) {
 			$upload_data = array(
 				'success' => true,
 				'file_name' => $encrypted_file_name
 			);
-		} else {
-			$upload_data = array(
-				'success' => false
-			);
 		}
 
 		return $upload_data;
 	}
-
-
 }

@@ -141,6 +141,7 @@ class Pages extends CI_Controller
 		$message = $_POST['message'];
 
 		$to = 'admin@gcfnw.org';
+		//$to = 'rocky.borlaza@southeasterndatacenter.com';
 		$email_subject = "Website Contact Form:  $name";
 		$email_body = "You have received a new message from your website contact form.\n\n"."Here are the details:\n\nName: $name\n\nEmail: $email_address\n\nPhone: $phone\n\nMessage:\n$message";
 		$headers = "From: no-reply@gcfnw.org\n";
