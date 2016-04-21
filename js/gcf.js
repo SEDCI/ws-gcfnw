@@ -140,6 +140,156 @@ $('#upload').on('show.bs.modal', function() {
 	$('#upload .modal-title').html('Uploading photos...');
 });
 
+$('.photo img').on('click', function() {
+	var idx = $('.photo img').index(this);
+	var pic = $(this).attr('src');
+	var da = $(this).attr('title');
+
+	if (idx == 0) {
+		$('#imgprevious').attr('disabled', 'true');
+	} else {
+		$('#imgprevious').removeAttr('disabled');
+	}
+
+	if (idx == $('.photo').length - 1) {
+		$('#imgnext').attr('disabled', 'true');
+	} else {
+		$('#imgnext').removeAttr('disabled');
+	}
+
+	setImgpagination(idx);
+
+	$('#previewimg').attr('src', pic);
+	$('#imgdate').html(da);
+	$('#preview').modal('show');
+});
+
+$('#preview').on('hide.bs-modal', function() {
+	$('#previewimg').removeAttr('src');
+});
+
+$('#imgprevious').on('click', function() {
+	var idx = getPreviewedphotoindex() - 1;
+
+	setImginfo(idx);
+
+	if (idx == 0) {
+		$(this).attr('disabled', 'true');
+	}
+
+	if (idx < $('.photo').length - 1) {
+		$('#imgnext').removeAttr('disabled');
+	}
+
+	setImgpagination(idx);
+});
+
+$('#imgnext').on('click', function() {
+	var idx = getPreviewedphotoindex() + 1;
+
+	setImginfo(idx);
+
+	if (idx == $('.photo').length - 1) {
+		$(this).attr('disabled', 'true');
+	}
+
+	if (idx > 0) {
+		$('#imgprevious').removeAttr('disabled');
+	}
+
+	setImgpagination(idx);
+});
+
+$('.delpic').on('click', function() {
+	var picid = $(this).closest('div').find('[type="hidden"]').val();
+
+	if (confirm("This photo will be deleted permanently. Proceed?")) {
+		window.location = window.location.href + '/photo/' + picid + '/delete';
+	}
+
+	return false;
+});
+
+$('#atitle #titletxt').on('click', function() {
+	var atitle = $(this).text();
+
+	$('#atitle [type="text"]').toggle().val(atitle).focus();
+	$(this).toggle();
+});
+
+$('#atitle [type="text"]').on('blur', function() {
+	var url_segments = window.location.href.split('/');
+	var slug = url_segments[url_segments.length - 1];
+	var id = slug.split('-')[0];
+	var oatitle = $('#atitle #titletxt').html();
+	var atitle = $(this).val();
+
+	$.post('../edit/' + id, { 'atitle' : atitle },
+		function(data) {
+			if (data.success == 'false') {
+				alert(data.error_msg);
+				$('#atitle [type="text"]').val($('#atitle #titletxt').html());
+			} else {
+				$('#atitle #titletxt').toggle().html(atitle);
+				$('#atitle [type="text"]').toggle();
+			}
+		}, 'json'
+	);
+})
+
+$('#adesc #desctxt').on('click', function() {
+	var adesc = $(this).text();
+
+	$('#adesc textarea').toggle().val(adesc).focus();
+	$(this).toggle();
+});
+
+$('#adesc textarea').on('blur', function() {
+	var url_segments = window.location.href.split('/');
+	var slug = url_segments[url_segments.length - 1];
+	var id = slug.split('-')[0];
+	var oadesc = $('#adesc #desctxt').html();
+	var adesc = $(this).val();
+
+	$.post('../edit/' + id, { 'adesc' : adesc },
+		function(data) {
+			if (data.success == 'false') {
+				alert(data.error_msg);
+				$('#adesc textarea').val($('#adesc #desctxt').html());
+			} else {
+				$('#adesc #desctxt').toggle().html(adesc);
+				$('#adesc textarea').toggle();
+			}
+		}, 'json'
+	);
+})
+
+$('.delalbum').on('click', function(e){
+	if (confirm("You are about to delete this album.\nThis will also delete all photos included in the album.\nProceed?")) {
+		window.location = window.location.href.replace('view', 'delete');
+	}
+
+	return false;
+});
+
+function getPreviewedphotoindex() {
+	var pic = $('#previewimg').attr('src');
+
+	return $('.photo img').index($(".photo img[src=\"" + pic + "\"]"));
+}
+
+function setImginfo(idx) {
+	var pic = $('.photo img:eq('+ idx +')').attr('src');
+	var da = $('.photo img:eq('+ idx +')').attr('title');
+
+	$('#previewimg').attr('src', pic);
+	$('#imgdate').html(da);
+}
+
+function setImgpagination(idx) {
+	$('#imgpagination').html((idx + 1) + ' of ' + $('.photo').length);
+}
+
 function uploadPic(formdata) {
 	var url_segments = window.location.href.split('/');
 	var slug = url_segments[url_segments.length -1]
@@ -173,13 +323,23 @@ function uploadPic(formdata) {
 		processData: false,
 		contentType: false,
 		success: function(result) {
-			var upload_success = '<div class="alert alert-success">' + result.uploaded + ' photos successfully uploaded.</div>';
-			var upload_failed = (result.failed != '') ? '<div class="alert alert-danger">' + result.failed.join('<br>') + '</div>' : '';
+			if (result.upload_limit_reached != 'true') {
+				var upload_success = '<div class="alert alert-success">' + result.uploaded + ' photos successfully uploaded.</div>';
+				var upload_failed = (result.failed != '') ? '<div class="alert alert-danger">' + result.failed.join('<br>') + '</div>' : '';
 
-			$('#upload .modal-title').html('Upload finished!');
-			$('#upload .progress').toggle();
-			$('#uploadmsg').html(upload_success + upload_failed);
-			$('#upload .modal-footer').toggle();
+				$('#upload .modal-title').html('Upload finished!');
+				$('#upload .progress').toggle();
+				$('#uploadmsg').html(upload_success + upload_failed);
+				$('#upload .modal-footer').toggle();
+
+				if (result.uploaded > 0) {
+					$('#upload').on('hide.bs.modal', function() {
+						location.reload();
+					});
+				}
+			} else {
+				alert('You can only upload ' + result.max_files + ' file(s) at a time.');
+			}
 		}
 	});
 }

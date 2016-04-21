@@ -71,13 +71,13 @@ $route['devotion'] = 'pages/showDevotion';
 $route['devotion/comment/post'] = 'pages/postWMcomment';
 
 $route['gallery'] = 'gallery/showIndex';
-$route['gallery/health'] = 'gallery/showHealth';
-$route['gallery/love'] = 'gallery/showLove';
+$route['gallery/(:any)'] = 'gallery/showAlbum/$1';
+/*$route['gallery/love'] = 'gallery/showLove';
 $route['gallery/music'] = 'gallery/showMusic';
 $route['gallery/december'] = 'gallery/showDecember';
 $route['gallery/training'] = 'gallery/showTraining';
 $route['gallery/matters'] = 'gallery/showMatters';
-$route['gallery/fellowship'] = 'gallery/showFellowship';
+$route['gallery/fellowship'] = 'gallery/showFellowship';*/
 
 $route['login'] = 'public/auth/showLogin';
 $route['login/auth'] = 'public/auth/login';
@@ -119,6 +119,9 @@ $route['admin/pages/gallery'] = 'admin/gallery/showGallery';
 $route['admin/pages/gallery/view/(:any)'] = 'admin/gallery/viewAlbum/$1';
 $route['admin/pages/gallery/add'] = 'admin/gallery/addAlbum';
 $route['admin/pages/gallery/view/(:any)/upload'] = 'admin/gallery/uploadPhotos/$1';
+$route['admin/pages/gallery/view/(:any)/photo/(:num)/delete'] = 'admin/gallery/removePhoto/$1/$2';
+$route['admin/pages/gallery/edit/(:any)'] = 'admin/gallery/editAlbum/$1';
+$route['admin/pages/gallery/delete/(:any)'] = 'admin/gallery/removeAlbum/$1';
 
 $route['admin/pages/events'] = 'admin/events/showList';
 $route['admin/pages/events/view/(:any)'] = 'admin/events/viewEvent/$1';

@@ -40,21 +40,9 @@
             <div id="gallery" align="center">
 
             	<div class="gallery main-gallery">
-
-                <a href="<?php echo base_url('gallery/health'); ?>" style="color: #333;"><img src="img/gallery/health/1.JPG" width="200" alt=""/><p>Health Talks</p></a>
-
-                <a href="<?php echo base_url('gallery/love'); ?>" style="color: #333;"><img src="img/gallery/love/2.JPG" width="200" alt=""/><p>Love Month 2009</p></a>
-
-                <a href="<?php echo base_url('gallery/music'); ?>" style="color: #333;"><img src="img/gallery/music/7.JPG" width="200" alt=""/><p>Music Ministry</p></a>
-
-                <a href="<?php echo base_url('gallery/december'); ?>" style="color: #333;"><img src="img/gallery/dec/6.JPG" width="200" alt=""/><p>December</p></a>
-
-                <a href="<?php echo base_url('gallery/training'); ?>" style="color: #333;"><img src="img/gallery/training/2.JPG" width="200" alt=""/><p>Facilitators' Training</p></a>
-
-                <a href="<?php echo base_url('gallery/matters'); ?>" style="color: #333;"><img src="img/gallery/training/13.JPG" width="200" alt=""/><p>Matters of The Heart</p></a>
-
-                <a href="<?php echo base_url('gallery/fellowship'); ?>" style="color: #333;"><img src="img/gallery/fellowship/6.JPG" width="200" alt=""/><p>Fellowship</p></a>
-
+<?php foreach($albums as $album): ?>
+                <a href="<?php echo base_url('gallery/'.$album['slug']); ?>" style="color: #333;"><img src="<?php echo base_url(GALLERY_PATH.$album['album_code'].'/thumb'.$album['album_cover']); ?>" width="200" alt=""/><p><?php echo $album['title']; ?></p></a>
+<?php endforeach; ?>
                 </div>
 
            	</div>

@@ -132,15 +132,69 @@
 	text-decoration: none;
 }
 
-.info-rows .img-thumbnail:hover {
-	/*background-color: #85c13b;*/
-	background-color: #008840;
-}
-
 .gallery #fileupload {
 	visibility: hidden;
 }
 
+.info-rows .photo:hover .img-thumbnail {
+	border: 1px solid #008840;
+	cursor: pointer;
+}
+
+.info-rows .album:hover .img-thumbnail {
+	border: 1px solid #008840;
+}
+
+#preview #imgview {
+	position: relative;
+	height: 475px;
+}
+
+#preview #imgview #previewimg {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	max-height: 475px;
+	max-width: 820px;
+}
+
+.gallery .picoptions {
+	display: none;
+}
+
+.gallery .photo:hover .picoptions {
+	display: block;
+	position: absolute;
+	top: 10px;
+	right: 26px;
+}
+
+.gallery .photo:hover .picoptions .btn {
+	padding: 4px 8px;
+	box-shadow: 1px 1px 3px;
+}
+
+.gallery #atitle [type="text"] {
+	margin-top: 20px;
+	display: none;
+	font-size: 36px;
+}
+
+.gallery #adesc textarea {
+	display: none;
+	width: 100%;
+}
+
+.gallery .albuminfo {
+	font-size: 12px;
+}
+
 #upload .modal-footer {
 	display: none;
+}
+
+#imgprevious:focus, #imgnext:focus {
+	background-color: #FFF;
+	outline: none;
 }
