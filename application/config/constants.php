@@ -92,3 +92,4 @@ define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 */
 define('GCF_SALT', 'Gr3eN417l$(hr!S+i@nFElL0WS4IP');
 define('GALLERY_PATH', 'img/gallery/');
+define('EVENTFILES_PATH', 'files/events/');

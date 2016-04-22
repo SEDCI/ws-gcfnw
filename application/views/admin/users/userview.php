@@ -6,7 +6,7 @@
                 </div>
                 <div class="col-sm-5 text-right main-btn">
                     <div class="pull-right">
-                        <a class="btn btn-warning" href="<?php echo base_url('admin/users/edit/'.$user['id']); ?>"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                        <a class="btn btn-default" href="<?php echo base_url('admin/users'); ?>">&laquo; Back to List</a> <a class="btn btn-warning" href="<?php echo base_url('admin/users/edit/'.$user['id']); ?>"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
                     </div>
                 </div>
             </div>

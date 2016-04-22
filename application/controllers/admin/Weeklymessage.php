@@ -19,7 +19,7 @@ class Weeklymessage extends MY_Controller
 
 		$data['allmessages'] = $this->weeklymessage_model->getAllmessages();
 
-		load_view_admin('pages/weeklymessagelist', $data, 'pages_nav');
+		load_view_admin('weeklymessage/weeklymessagelist', $data, 'pages_nav');
 	}
 
 	public function viewMessage($message_id)
@@ -31,7 +31,7 @@ class Weeklymessage extends MY_Controller
 		$data['message'] = $this->weeklymessage_model->getMessage($message_id);
 		$data['comments'] = $this->weeklymessage_model->getAllcomments($message_id);
 
-		load_view_admin('pages/weeklymessageview', $data, 'pages_nav');
+		load_view_admin('weeklymessage/weeklymessageview', $data, 'pages_nav');
 	}
 
 	public function addMessage()
@@ -130,7 +130,7 @@ class Weeklymessage extends MY_Controller
 		$data['title'] = 'Add Weekly Message';
 		$data['actlnk_weekly'] = ' class="gcf-active"';
 
-		load_view_admin('pages/weeklymessageform', $data, 'pages_nav');
+		load_view_admin('weeklymessage/weeklymessageform', $data, 'pages_nav');
 	}
 
 	public function editMessage($message_id)
@@ -280,7 +280,7 @@ class Weeklymessage extends MY_Controller
 		$data['actlnk_weekly'] = ' class="gcf-active"';
 		$data['wmid'] = $message_id;
 
-		load_view_admin('pages/weeklymessageedit', $data, 'pages_nav');
+		load_view_admin('weeklymessage/weeklymessageedit', $data, 'pages_nav');
 	}
 
 	public function removeMessage($message_id)
@@ -304,6 +304,8 @@ class Weeklymessage extends MY_Controller
 		if (!empty($message_data['doc_file'])) {
 			unlink('./files/weeklymessage/'.$message_data['doc_file']);
 		}
+
+		$this->session->set_flashdata('pagemsg', '<div class="alert alert-success">A message has been successfully deleted.</div>');
 
 		redirect('admin/pages/weeklymessage');
 	}

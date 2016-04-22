@@ -18,7 +18,7 @@ class Events extends MY_Controller
 
 		$data['allevents'] = $this->events_model->getAllevents();
 
-		load_view_admin('pages/eventslist', $data, 'pages_nav');
+		load_view_admin('events/eventslist', $data, 'pages_nav');
 	}
 
 	public function viewEvent($event_id)
@@ -29,7 +29,7 @@ class Events extends MY_Controller
 
 		$data['event'] = $this->events_model->getEvent($event_id);
 
-		load_view_admin('pages/eventview', $data, 'pages_nav');
+		load_view_admin('events/eventview', $data, 'pages_nav');
 	}
 
 	public function addEvent()
@@ -113,7 +113,7 @@ class Events extends MY_Controller
 		$data['title'] = 'Add Event';
 		$data['actlnk_events'] = ' class="gcf-active"';
 
-		load_view_admin('pages/eventsform', $data, 'pages_nav');
+		load_view_admin('events/eventsform', $data, 'pages_nav');
 	}
 
 	public function editMessage($message_id)
@@ -228,7 +228,7 @@ class Events extends MY_Controller
 		$data['actlnk_events'] = ' class="gcf-active"';
 		$data['wmid'] = $message_id;
 
-		load_view_admin('pages/weeklymessageedit', $data, 'pages_nav');
+		load_view_admin('events/weeklymessageedit', $data, 'pages_nav');
 	}
 
 	public function removeMessage($message_id)
