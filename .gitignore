@@ -30,3 +30,7 @@ test.php
 *.sql
 !gcf.sql
 readme.rst
+files/events/p/*
+files/events/v/*
+files/weeklymessage/*
+img/gallery/*
