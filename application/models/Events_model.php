@@ -8,9 +8,18 @@ class Events_model extends CI_Model
 		$this->load->database();
 	}
 
-	public function getAllevents()
+	public function getAllevents($options = array())
 	{
-		$this->db->order_by('event_date', 'DESC');
+		if (array_key_exists('where', $options)) {
+			$this->db->where($options['where']);
+		}
+
+		if (array_key_exists('order', $options)) {
+			$this->db->order_by($options['order']);
+		} else {
+			$this->db->order_by('event_date', 'DESC');
+		}
+
 		$result = $this->db->get($this->table);
 		return $result->result_array();
 	}

@@ -59,6 +59,7 @@ $route['translate_uri_dashes'] = FALSE;
 | -------------------------------------------------------------------------
 */
 $route['events'] = 'pages/showEvents';
+$route['events/from/(:any)/to/(:any)'] = 'pages/showEvents/$1/$2';
 $route['requests'] = 'pages/showRequests';
 $route['about'] = 'pages/showAbout';
 
@@ -127,6 +128,7 @@ $route['admin/pages/events'] = 'admin/events/showList';
 $route['admin/pages/events/view/(:any)'] = 'admin/events/viewEvent/$1';
 $route['admin/pages/events/add'] = 'admin/events/addEvent';
 $route['admin/pages/events/edit/(:any)'] = 'admin/events/editEvent/$1';
+$route['admin/pages/events/edit/(:any)/removefile'] = 'admin/events/removeFile';
 $route['admin/pages/events/delete/(:any)'] = 'admin/events/removeEvent/$1';
 
 $route['admin/pages/weeklymessage'] = 'admin/weeklymessage/showList';

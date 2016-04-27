@@ -18,90 +18,79 @@ class Events extends MY_Controller
 
 		$data['allevents'] = $this->events_model->getAllevents();
 
-		load_view_admin('events/eventslist', $data, 'pages_nav');
+		load_view_admin('events/listevents', $data, 'pages_nav');
 	}
 
-	public function viewEvent($event_id)
+	public function viewEvent($id)
 	{
 		$data['title'] = 'Events';
 		$data['actlnk_events'] = ' class="gcf-active"';
-		$data['event_id'] = $event_id;
+		$data['id'] = $id;
 
-		$data['event'] = $this->events_model->getEvent($event_id);
+		$data['event'] = $this->events_model->getEvent($id);
 
-		load_view_admin('events/eventview', $data, 'pages_nav');
+		load_view_admin('events/viewevent', $data, 'pages_nav');
 	}
 
 	public function addEvent()
 	{
 		$this->load->helper('form');
-		$this->load->library('form_validation');
-
-		$this->form_validation->set_rules('wmverse', 'Verse', 'trim|required');
-		$this->form_validation->set_rules('wmmessage', 'Message', 'trim|required');
 
 		if ($this->input->post()) {
+			$this->load->library('form_validation');
+			$this->load->library('upload');
+
+			$this->form_validation->set_rules('eventcontent', 'Content', 'trim|required|max_length[500]');
+
 			if ($this->form_validation->run() === true) {
 				$upload_error = array();
-				$ppt_filename = '';
-				$ios_filename = '';
-				$pdf_filename = '';
+				$video_filename = '';
+				$photo_filename = '';
 
-				$config['upload_path'] = './files/weeklymessage/';
 				$config['file_ext_tolower'] = true;
 				$config['encrypt_name'] = true;
 
-				if ($_FILES['wmfileppt']['name'] != '' && $_FILES['wmfileppt']['size'] > 0) {
-					$config['allowed_types'] = 'ppt|pptx';
+				if ($_FILES['eventvideo']['name'] != '' && $_FILES['eventvideo']['size'] > 0) {
+					$config['upload_path'] = './'.EVENTFILES_PATH.'v/';
+					$config['allowed_types'] = 'mp4|ogg';
 
 					$this->upload->initialize($config);
 
-					if (!$this->upload->do_upload('wmfileppt')) {
-						$upload_error['ppt'] = $this->upload->display_errors();
+					if (!$this->upload->do_upload('eventvideo')) {
+						$data['upload_error']['eventvideo'] = $this->upload->display_errors('<span class="form-error">- ', '</span>');
 					} else {
-						$ppt_filename = $this->upload->data('file_name');
+						$video_filename = $this->upload->data('file_name');
 					}
 				}
 
-				if ($_FILES['wmfileios']['name'] != '' && $_FILES['wmfileios']['size'] > 0) {
-					$config['allowed_types'] = 'ppt';
+				if ($_FILES['eventphoto']['name'] != '' && $_FILES['eventphoto']['size'] > 0) {
+					$config['upload_path'] = './'.EVENTFILES_PATH.'p/';
+					$config['allowed_types'] = 'jpg|png|gif';
 
 					$this->upload->initialize($config);
 
-					if (!$this->upload->do_upload('wmfileios')) {
-						$upload_error['ios'] = $this->upload->display_errors();
+					if (!$this->upload->do_upload('eventphoto')) {
+						$data['upload_error']['eventphoto'] = $this->upload->display_errors('<span class="form-error">- ', '</span>');
 					} else {
-						$ios_filename = $this->upload->data('file_name');
+						$photo_filename = $this->upload->data('file_name');
 					}
 				}
 
-				if ($_FILES['wmfilepdf']['name'] != '' && $_FILES['wmfilepdf']['size'] > 0) {
-					$config['allowed_types'] = 'pdf';
-
-					$this->upload->initialize($config);
-
-					if (!$this->upload->do_upload('wmfilepdf')) {
-						$upload_error['pdf'] = $this->upload->display_errors();
-					} else {
-						$pdf_filename = $this->upload->data('file_name');
-					}
-				}
-
-				if (empty($upload_error)) {
-					$message_data = array(
-						'verse' => $this->input->post('wmverse'),
-						'content' => $this->input->post('wmmessage'),
-						'ppt_file' => $ppt_filename,
-						'ios_file' => $ios_filename,
-						'pdf_file' => $pdf_filename,
-						'date_added' => date('Y-m-d H:i:s')
+				if (empty($data['upload_error'])) {
+					$event_data = array(
+						'event_date' => $this->input->post('eventdate'),
+						'event_content' => $this->input->post('eventcontent'),
+						'event_video' => $video_filename,
+						'event_photo' => $photo_filename,
+						'date_added' => date('Y-m-d H:i:s'),
+						'added_by' => $this->session->userdata('adminuser')
 					);
 
-					$this->events_model->saveMessage($message_data);
+					$this->events_model->saveEvent($event_data);
 		
-					$this->session->set_flashdata('pagemsg', '<div class="alert alert-success">A message has been successfully added.</div>');
+					$this->session->set_flashdata('pagemsg', '<div class="alert alert-success">An event has been successfully added.</div>');
 
-					redirect('admin/pages/weeklymessage');
+					redirect('admin/pages/events');
 				} else {
 					$data['pagemsg'] = '<div class="alert alert-danger">'.implode($upload_error).'</div>';
 				}
@@ -113,161 +102,131 @@ class Events extends MY_Controller
 		$data['title'] = 'Add Event';
 		$data['actlnk_events'] = ' class="gcf-active"';
 
-		load_view_admin('events/eventsform', $data, 'pages_nav');
+		load_view_admin('events/addevent', $data, 'pages_nav');
 	}
 
-	public function editMessage($message_id)
+	public function editEvent($id)
 	{
 		$this->load->helper('form');
-		$this->load->library('form_validation');
-		$this->load->library('upload');
 
-		$data['message'] = $this->events_model->getMessage($message_id);
+		$data['event'] = $this->events_model->getEvent($id);
 
 		if ($this->input->post()) {
-			$this->form_validation->set_rules('wmverse', 'Verse', 'trim|required');
-			$this->form_validation->set_rules('wmmessage', 'Message', 'trim|required');
+			$this->load->library('form_validation');
+			$this->load->library('upload');
+
+			$this->form_validation->set_rules('eventcontent', 'Content', 'trim|required|max_length[500]');
 
 			if ($this->form_validation->run() === true) {
 				$upload_error = array();
-				$ppt_filename = $data['message']['ppt_file'];
-				$ios_filename = $data['message']['ios_file'];
-				$pdf_filename = $data['message']['pdf_file'];
+				$photo_filename = $data['event']['event_photo'];
+				$video_filename = $data['event']['event_video'];
 
-				$config['upload_path'] = './files/weeklymessage/';
 				$config['file_ext_tolower'] = true;
 				$config['encrypt_name'] = true;
 
-
-				/**
-				 * Upload/Remove Powerpoint
-				 *
-				 */
-				if (isset($_FILES['wmfileppt'])) {
-					if ($_FILES['wmfileppt']['name'] != '' && $_FILES['wmfileppt']['size'] > 0) {
-						$config['allowed_types'] = 'ppt';
+				if (isset($_FILES['eventphoto'])) {
+					if ($_FILES['eventphoto']['name'] != '' && $_FILES['eventphoto']['size'] > 0) {
+						$config['upload_path'] = './'.EVENTFILES_PATH.'p/';
+						$config['allowed_types'] = 'jpg|png|gif';
 
 						$this->upload->initialize($config);
 
-						if (!$this->upload->do_upload('wmfileppt')) {
-							$upload_error['ppt'] = $this->upload->display_errors();
+						if (!$this->upload->do_upload('eventphoto')) {
+							$data['upload_error']['eventphoto'] = $this->upload->display_errors('<span class="form-error">- ', '</span>');
 						} else {
-							$ppt_filename = $this->upload->data('file_name');
+							unlink(EVENTFILES_PATH.'p/'.$photo_filename);
+							$photo_filename = $this->upload->data('file_name');
 						}
-					} else {
-						unlink($config['upload_path'].$ppt_filename);
-						$ppt_filename = '';
 					}
 				}
 
-				/**
-				 * Upload/Remove iOS Presentation
-				 *
-				 */
-				if (isset($_FILES['wmfileios'])) {
-					if ($_FILES['wmfileios']['name'] != '' && $_FILES['wmfileios']['size'] > 0) {
-						$config['allowed_types'] = 'pdf';
+				if (isset($_FILES['eventvideo'])) {
+					if ($_FILES['eventvideo']['name'] != '' && $_FILES['eventvideo']['size'] > 0) {
+						$config['upload_path'] = './'.EVENTFILES_PATH.'v/';
+						$config['allowed_types'] = 'mp4|ogg';
 
 						$this->upload->initialize($config);
 
-						if (!$this->upload->do_upload('wmfileios')) {
-							$upload_error['ios'] = $this->upload->display_errors();
+						if (!$this->upload->do_upload('eventvideo')) {
+							$data['upload_error']['eventvideo'] = $this->upload->display_errors('<span class="form-error">- ', '</span>');
 						} else {
-							$ios_filename = $this->upload->data('file_name');
+							unlink(EVENTFILES_PATH.'v/'.$video_filename);
+							$video_filename = $this->upload->data('file_name');
 						}
-					} else {
-						unlink($config['upload_path'].$ios_filename);
-						$ios_filename = '';
 					}
 				}
 
-				/**
-				 * Upload/Remove PDF
-				 *
-				 */
-				if (isset($_FILES['wmfilepdf'])) {
-					if ($_FILES['wmfilepdf']['name'] != '' && $_FILES['wmfilepdf']['size'] > 0) {
-						$config['allowed_types'] = 'pdf';
-
-						$this->upload->initialize($config);
-
-						if (!$this->upload->do_upload('wmfilepdf')) {
-							$upload_error['pdf'] = $this->upload->display_errors();
-						} else {
-							$pdf_filename = $this->upload->data('file_name');
-						}
-					} else {
-						unlink($config['upload_path'].$pdf_filename);
-						$pdf_filename = '';
-					}
-				}
-
-				if (empty($upload_error)) {
-					$message_data = array(
-						'verse' => $this->input->post('wmverse'),
-						'content' => $this->input->post('wmmessage'),
-						'ppt_file' => $ppt_filename,
-						'ios_file' => $ios_filename,
-						'pdf_file' => $pdf_filename
+				if (empty($data['upload_error'])) {
+					$event_data = array(
+						'event_date' => $this->input->post('eventdate'),
+						'event_content' => $this->input->post('eventcontent'),
+						'event_video' => $video_filename,
+						'event_photo' => $photo_filename,
+						'date_updated' => date('Y-m-d H:i:s'),
+						'updated_by' => $this->session->userdata('adminuser')
 					);
 
-					$this->events_model->updateMessage($message_id, $message_data);
+					$this->events_model->updateEvent($id, $event_data);
 		
-					$this->session->set_flashdata('pagemsg', '<div class="alert alert-success">A message has been successfully updated.</div>');
+					$this->session->set_flashdata('pagemsg', '<div class="alert alert-success">An event has been successfully updated.</div>');
 
-					redirect('admin/pages/weeklymessage');
-				} else {
-					$data['pagemsg'] = '<div class="alert alert-danger">'.implode($upload_error).'</div>';
+					redirect('admin/pages/events');
 				}
 			} else {
 				$data['pagemsg'] = '<div class="alert alert-danger">'.validation_errors().'</div>';
 			}
 		}
 
-		$data['title'] = 'Edit Weekly Message';
+		$data['title'] = 'Edit Event';
 		$data['actlnk_events'] = ' class="gcf-active"';
-		$data['wmid'] = $message_id;
+		$data['id'] = $id;
 
-		load_view_admin('events/weeklymessageedit', $data, 'pages_nav');
+		load_view_admin('events/editevent', $data, 'pages_nav');
 	}
 
-	public function removeMessage($message_id)
+	public function removeEvent($id)
 	{
-		$message_data = $this->events_model->getMessage($message_id);
+		$event_data = $this->events_model->getEvent($id);
 
-		$this->events_model->deleteMessage($message_id);
+		$this->events_model->deleteEvent($id);
 
-		if (!empty($message_data['ppt_file'])) {
-			unlink('./files/weeklymessage/'.$message_data['ppt_file']);
+		if (!empty($event_data['event_photo'])) {
+			unlink(EVENTFILES_PATH.'p/'.$event_data['event_photo']);
 		}
 
-		if (!empty($message_data['ios_file'])) {
-			unlink('./files/weeklymessage/'.$message_data['ios_file']);
+		if (!empty($event_data['event_video'])) {
+			unlink(EVENTFILES_PATH.'v/'.$event_data['event_video']);
 		}
 
-		if (!empty($message_data['pdf_file'])) {
-			unlink('./files/weeklymessage/'.$message_data['pdf_file']);
+		$this->session->set_flashdata('pagemsg', '<div class="alert alert-success">An event has been successfully deleted.</div>');
+
+		redirect('admin/pages/events');
+	}
+
+	public function removeFile()
+	{
+		$return['success'] = 'false';
+
+		if ($id = $this->input->post('eid')) {
+			$event_data = $this->events_model->getEvent($id);
+			$eventfile = './'.EVENTFILES_PATH;
+
+			if ($this->input->post('ephoto') == '1') {
+				$data = array('event_photo' => '');
+				$eventfile .= 'p/'.$event_data['event_photo'];
+			}
+
+			if ($this->input->post('evideo') == '1') {
+				$data = array('event_video' => '');
+				$eventfile .= 'v/'.$event_data['event_video'];
+			}
+				
+			$this->events_model->updateEvent($id, $data);
+			unlink($eventfile);
+			$return['success'] = 'true';
 		}
 
-		redirect('admin/pages/weeklymessage');
-	}
-
-	public function showComments($message_id)
-	{
-		$this->events_model->getAllcomments($message_id);
-	}
-
-	public function removeComment($comment_id)
-	{
-		$this->events_model->deleteComment($comment_id, $this->session->userdata('adminuser'));
-	}
-
-	public function emailNotif($recipient, $subject, $message)
-	{
-		$this->email->from('no-reply@gcfnw.org', 'GCF-no-reply');
-		$this->email->to($recipient);
-		$this->email->subject($subject);
-		$this->email->message($message);
-		$this->email->send();
+		echo json_encode($return);
 	}
 }

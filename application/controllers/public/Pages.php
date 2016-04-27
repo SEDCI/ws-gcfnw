@@ -21,7 +21,7 @@ class Pages extends CI_Controller
 		load_view_public('index');
 	}
 
-	public function showEvents()
+	public function showEvents($from = '', $to = '')
 	{
 		$data['title'] = 'Events';
 		$data['events_selected'] = 'nav-selected';

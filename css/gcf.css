@@ -66,3 +66,11 @@
 #sidebtn #epcmsg {
 	display: none;
 }
+
+#eventslist .panel-heading {
+	padding: 3px 15px;
+}
+
+#eventslist img, #eventslist video {
+	vertical-align: top;
+}

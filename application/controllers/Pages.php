@@ -40,10 +40,23 @@ class Pages extends CI_Controller
 		load_view_public('index');
 	}
 
-	public function showEvents()
+	public function showEvents($from = '', $to = '')
 	{
+		$this->load->model('events_model');
+
 		$data['title'] = 'Events';
 		$data['events_selected'] = 'nav-selected';
+
+		$data['from'] = $from;
+		$data['to'] = $to;
+
+		if ($from != '' && $to != '') {
+			$options['where'] = "event_date BETWEEN '".nice_date($from, 'Y-m-d')."' AND '".nice_date($to, 'Y-m-d')."'";
+		}
+
+		$options['order'] = 'event_date ASC';
+
+		$data['events'] = $this->events_model->getAllevents($options);
 
 		load_view_public('header', $data);
 		load_view_public('events');

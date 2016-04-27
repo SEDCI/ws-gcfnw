@@ -19,6 +19,15 @@ $('.datepicker').datepicker({
 	orientation: "top auto"
 });
 
+$('.datepicker2').datepicker({
+	format: "yyyy-mm-dd",
+	startView: 2,
+	clearBtn: true,
+	autoclose: true,
+	todayHighlight: true,
+	orientation: "top auto"
+});
+
 function toggleOtherCivilStatus(){
 	var civilstatus = $('[name="civilstatus"]').val();
 
@@ -218,8 +227,7 @@ $('#atitle #titletxt').on('click', function() {
 });
 
 $('#atitle [type="text"]').on('blur', function() {
-	var url_segments = window.location.href.split('/');
-	var slug = url_segments[url_segments.length - 1];
+	var slug = getURLsegment('last');
 	var id = slug.split('-')[0];
 	var oatitle = $('#atitle #titletxt').html();
 	var atitle = $(this).val();
@@ -245,8 +253,7 @@ $('#adesc #desctxt').on('click', function() {
 });
 
 $('#adesc textarea').on('blur', function() {
-	var url_segments = window.location.href.split('/');
-	var slug = url_segments[url_segments.length - 1];
+	var slug = getURLsegment('last');
 	var id = slug.split('-')[0];
 	var oadesc = $('#adesc #desctxt').html();
 	var adesc = $(this).val();
@@ -264,12 +271,62 @@ $('#adesc textarea').on('blur', function() {
 	);
 })
 
-$('.delalbum').on('click', function(e){
+$('.delalbum').on('click', function(){
 	if (confirm("You are about to delete this album.\nThis will also delete all photos included in the album.\nProceed?")) {
 		window.location = window.location.href.replace('view', 'delete');
 	}
 
 	return false;
+});
+
+$('.delevent').on('click', function(){
+	if (confirm("You are about to delete this event. Proceed?")) {
+		if (window.location.href.indexOf('view') >= 0) {
+			window.location = window.location.href.replace('view', 'delete');
+		} else {
+			return true;
+		}
+	}
+
+	return false;
+});
+
+$('.delephoto').on('click', function(){
+	if (confirm("You are about to remove this photo. Proceed?")) {
+		deleteEventfile('p');
+	}
+});
+
+$('.delevideo').on('click', function(){
+	if (confirm("You are about to remove this video. Proceed?")) {
+		deleteEventfile('v');
+	}
+});
+
+$('video').bind('contextmenu', function() {
+	return false;
+});
+
+$('#eventslist button').on('click', function() {
+	var url_segments = window.location.href.split('/');
+	var fridx = url_segments.indexOf('from');
+	var toidx = url_segments.indexOf('to');
+	var efr = $('#efrom').val();
+	var eto = $('#eto').val();
+
+	if (fridx > 0) {
+		url_segments[fridx + 1] = efr;
+		url_segments[toidx + 1] = eto;
+		window.location = url_segments.join('/');
+		return false;
+	}
+
+	if (efr == '' || eto == '') {
+		window.location = window.location.href.substr(0, window.location.href.indexOf('/from'));
+		return false;
+	}
+
+	window.location = window.location.href + '/from/' + efr + '/to/' + eto;
 });
 
 function getPreviewedphotoindex() {
@@ -291,8 +348,7 @@ function setImgpagination(idx) {
 }
 
 function uploadPic(formdata) {
-	var url_segments = window.location.href.split('/');
-	var slug = url_segments[url_segments.length -1]
+	var slug = getURLsegment('last');
 
 	$('#upload').modal('show');
 
@@ -342,4 +398,35 @@ function uploadPic(formdata) {
 			}
 		}
 	});
+}
+
+function getURLsegment(segmentIndex) {
+	var url_segments = window.location.href.split('/');
+
+	if (segmentIndex == 'last') {
+		return url_segments[url_segments.length - 1];
+	}
+
+	return url_segments[segmentIndex];
+}
+
+function deleteEventfile(eftypecode) {
+	var id = getURLsegment('last');
+
+	switch(eftypecode) {
+		case 'p':
+			var ep = '1';
+			break;
+		case 'v':
+			var ev = '1';
+			break;
+	}
+
+	$.post(id + '/removefile', { 'ephoto' : ep, 'evideo' : ev, 'eid' : id },
+		function(data) {
+			if (data.success == 'true') {
+				location.reload();
+			}
+		}, 'json'
+	);
 }
