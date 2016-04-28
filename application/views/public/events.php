@@ -157,13 +157,19 @@
 if (count($events) > 0):
 foreach($events as $event):
 ?>
-                                <li class="list-group-item">
+                                <li class="list-group-item eventitem">
                                     <h5><?php echo nice_date($event['event_date'], 'F j, Y'); ?></h5>
                                     <p><?php echo $event['event_content']; ?></p>
+<?php if (!empty($event['event_photo'])): ?>
                                     <img src="<?php echo base_url(EVENTFILES_PATH.'p/'.$event['event_photo']); ?>" width="300">
+<?php
+endif;
+if (!empty($event['event_video'])):
+?>
                                     <video width="300" controls>
                                         <source src="<?php echo base_url(EVENTFILES_PATH.'v/'.$event['event_video']); ?>" type="video/mp4">
                                     </video>
+<?php endif; ?>
                                 </li>
 <?php
 endforeach;
@@ -179,3 +185,24 @@ endif;
                 </div>
             </div>
     </section>
+
+    <div class="modal" id="eventmodal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12" id="eventimgview">
+                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                            <img class="img img-responsive" id="eventimg">
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="modal-footer">
+                    <div class="pull-left text-muted" id="imgdate"></div>
+                    <button type="button" class="btn btn-default" id="imgprevious"><span class="glyphicon glyphicon-chevron-left"></span></button>
+                    <span id="imgpagination"></span>
+                    <button type="button" class="btn btn-default" id="imgnext"><span class="glyphicon glyphicon-chevron-right"></span></button>
+                </div>-->
+            </div>
+        </div>
+    </div>

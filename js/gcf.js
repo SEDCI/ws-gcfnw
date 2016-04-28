@@ -329,6 +329,16 @@ $('#eventslist button').on('click', function() {
 	window.location = window.location.href + '/from/' + efr + '/to/' + eto;
 });
 
+$('#eventslist .eventitem img').on('click', function() {
+	$('#eventmodal').modal('show');
+	$('#eventmodal #eventimg').attr('src', $(this).attr('src'));
+});
+
+$('#eventmodal').on('hide.bs.modal', function() {
+	$('#eventmodal #eventimg').removeAttr('src');
+});
+
+
 function getPreviewedphotoindex() {
 	var pic = $('#previewimg').attr('src');
 
