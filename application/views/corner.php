@@ -168,6 +168,7 @@ $(document).ready(function(){
 <?php if ($this->session->userdata('level') == 1): ?>
 			<div>
 				<h5>Latest Requests</h5>
+				<p><a class="btn btn-sm btn-success" href="<?php echo base_url('requests'); ?>">View All</a></p>
 			</div>
 			<div id="reqlist">
 <?php

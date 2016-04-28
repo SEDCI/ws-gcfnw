@@ -307,7 +307,7 @@ $('video').bind('contextmenu', function() {
 	return false;
 });
 
-$('#eventslist button').on('click', function() {
+$('#eventslist button, #requestslist button').on('click', function() {
 	var url_segments = window.location.href.split('/');
 	var fridx = url_segments.indexOf('from');
 	var toidx = url_segments.indexOf('to');

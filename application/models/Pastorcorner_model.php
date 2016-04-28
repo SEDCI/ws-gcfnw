@@ -19,12 +19,12 @@ class Pastorcorner_model extends CI_Model
 
 	public function getPrayerrequests($options = '')
 	{
-		if (array_key_exists('order_by', $options)) {
-			$this->db->order_by($options['order_by']);
-		}
-
 		if (array_key_exists('where', $options)) {
 			$this->db->where($options['where']);
+		}
+
+		if (array_key_exists('order', $options)) {
+			$this->db->order_by($options['order']);
 		}
 
 		$this->db->select('a.message, a.date_added, b.first_name, b.last_name, b.email_address');

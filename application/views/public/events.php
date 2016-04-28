@@ -8,7 +8,7 @@
 
             	
 
-                    <h1>Events</h2>
+                    <h1>Events</h1>
 
                     <!--<h4>Lorem ipsum dolor sit amet consectetur.</h3>-->
 

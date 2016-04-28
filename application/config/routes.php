@@ -61,6 +61,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['events'] = 'pages/showEvents';
 $route['events/from/(:any)/to/(:any)'] = 'pages/showEvents/$1/$2';
 $route['requests'] = 'pages/showRequests';
+$route['requests/from/(:any)/to/(:any)'] = 'pages/showRequests/$1/$2';
 $route['about'] = 'pages/showAbout';
 
 $route['pastormessage/update'] = 'pages/updatePastormessage';

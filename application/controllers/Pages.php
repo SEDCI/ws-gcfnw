@@ -63,14 +63,29 @@ class Pages extends CI_Controller
 		load_view_public('footer');
 	}
 
-	public function showRequests()
+	public function showRequests($from = '', $to = '')
 	{
-		$data['title'] = 'Prayer Requests';
-		$data['requests_selected'] = 'nav-selected';
+		if ($this->session->userdata('level') == 1) {
+			$data['title'] = 'Prayer Requests';
+			$data['requests_selected'] = 'nav-selected';
 
-		load_view_public('header', $data);
-		load_view_public('request');
-		load_view_public('footer');
+			$data['from'] = $from;
+			$data['to'] = $to;
+
+			if ($from != '' && $to != '') {
+				$options['where'] = "DATE(date_added) BETWEEN '".nice_date($from, 'Y-m-d')."' AND '".nice_date($to, 'Y-m-d')."'";
+			}
+
+			$options['order'] = 'date_added DESC';
+
+			$data['prequests'] = $this->pastorcorner_model->getPrayerrequests($options);
+
+			load_view_public('header', $data);
+			load_view_public('requests');
+			load_view_public('footer');
+		} else {
+			redirect();
+		}
 	}
 
 	public function showAbout()
