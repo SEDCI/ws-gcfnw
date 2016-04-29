@@ -1,5 +1,9 @@
 /* GCF Custom CSS */
 
+header {
+	background-image: url('../img/home-bg.png');
+}
+
 .nav-selected {
 	background-color: #1E824C;
 	border-radius: 3px
