@@ -54,7 +54,7 @@ class Members_model extends CI_Model
 		return false;
 	}
 
-	public function saveMember()
+	public function saveMember($other_data = '')
 	{
 		/**
 		* Personal Information
@@ -101,6 +101,8 @@ class Members_model extends CI_Model
 			'application_type' => $this->input->post('applicationtype'),
 			'status' => 'A'
 		);
+
+		$personal_info = (!empty($other_data)) ? array_merge($personal_info, $other_data) : $personal_info;
 
 		$this->db->insert('m_personal', $personal_info);
 		$m_personal_id = $this->db->insert_id();
@@ -201,7 +203,7 @@ class Members_model extends CI_Model
 		return $verification_key;
 	}
 
-	public function updateMember()
+	public function updateMember($other_data = '')
 	{
 		/**
 		* Personal Information
@@ -247,6 +249,8 @@ class Members_model extends CI_Model
 			'date_received' => $this->input->post('datereceived'),
 			'application_type' => $this->input->post('applicationtype')
 		);
+
+		$personal_info = (!empty($other_data)) ? array_merge($personal_info, $other_data) : $personal_info;
 
 		$this->db->update('m_personal', $personal_info, array('id' => $m_personal_id, 'membership_id' => $membership_id));
 

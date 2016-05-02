@@ -9,7 +9,7 @@
 				</div>
 			</div>
 			<hr />
-<?php echo $memmsg; ?>
+			<?php echo $memmsg; ?>
 			<div class="table-responsive">
 			<table class="table table-collapse table-striped table-hover">
 				<thead>

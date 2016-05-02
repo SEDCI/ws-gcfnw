@@ -94,6 +94,18 @@
 	padding-bottom: 20px;
 }
 
+.memberinfo .panel-heading {
+	padding: 5px 15px;
+}
+/*
+.memberinfo #memberphoto {
+	cursor: pointer;
+}
+
+.memberinfo #memberpic {
+	display: none;
+}
+*/
 .actions {
 	width: 120px;
 }

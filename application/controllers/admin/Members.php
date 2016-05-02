@@ -36,6 +36,7 @@ class Members extends MY_Controller
 		$data['title'] = 'Member Information';
 		$data['actlnk_members'] = ' class="gcf-active"';
 		$data['membership_id'] = $membership_id;
+		$data['memmsg'] = $this->session->flashdata('memmsg');
 
 		$criteria = array('membership_id' => $membership_id);
 
@@ -59,6 +60,8 @@ class Members extends MY_Controller
 		$data['memberinfo']['personal']['civil_status'] = $civil_status;
 
 		$data['memberinfo']['personal']['ministry_involvement'] = $this->getMinistriesStrings($data['memberinfo']['personal']['ministry_involvement']);
+
+		$data['memberinfo']['personal']['pic'] = (!empty($data['memberinfo']['personal']['photo'])) ? base_url('./'.MEMBERPICS_PATH.$data['memberinfo']['personal']['photo']) : base_url(DEFAULT_MEMBER_PHOTO);
 
 		load_view_admin('members/memberinfo', $data, 'members_nav');
 	}
@@ -124,18 +127,34 @@ class Members extends MY_Controller
 		load_view_admin('members/membersform', $data, 'members_nav');
 	}
 
+	public function uploadPhoto($fileinputname)
+	{
+		$return = false;
+
+		if ($_FILES[$fileinputname]['name'] != '' && $_FILES[$fileinputname]['size'] > 0) {
+			$this->load->library('upload');
+
+			$config['file_ext_tolower'] = true;
+			$config['encrypt_name'] = true;
+			$config['upload_path'] = './'.MEMBERPICS_PATH;
+			$config['allowed_types'] = 'jpg|png|gif';
+
+			$this->upload->initialize($config);
+
+			if (!$this->upload->do_upload($fileinputname)) {
+				$return['error'] = $this->upload->display_errors('<span class="form-error">- ', '</span>');
+			} else {
+				$return['filename'] = $this->upload->data('file_name');
+			}
+		}
+
+		return $return;
+	}
+
 	public function editMember($membership_id)
 	{
 		$this->load->helper('form');
 		$this->load->library('form_validation');
-
-		if ($this->form_validation->run('member_data') === true) {
-			$this->members_model->updateMember();
-
-			$this->session->set_flashdata('memmsg', '<div class="alert alert-success">A member has been successfully updated.</div>');
-
-			redirect('admin/members');
-		}
 
 		$data['title'] = 'Edit Member';
 		$data['actlnk_members'] = ' class="gcf-active"';
@@ -153,6 +172,8 @@ class Members extends MY_Controller
 
 		$data['ministry_involvement'] = explode(',', $data['memberinfo']['personal']['ministry_involvement']);
 
+		$data['memberinfo']['personal']['pic'] = (!empty($data['memberinfo']['personal']['photo'])) ? base_url('./'.MEMBERPICS_PATH.$data['memberinfo']['personal']['photo']) : base_url(DEFAULT_MEMBER_PHOTO);
+
 		$data['months'] = array(
 			' ' => 'Month',
 			'1' => 'January',
@@ -168,6 +189,22 @@ class Members extends MY_Controller
 			'11' => 'November',
 			'12' => 'December'
 		);
+
+		if ($this->form_validation->run('member_data') === true) {
+			$upload_result = $this->uploadPhoto('memberpic');
+
+			if (!empty($upload_result['error'])) {
+				$data['photo_error'] = $upload_result['error'];
+			} else {
+				$this->members_model->updateMember(array('photo' => $upload_result['filename']));
+
+				unlink('./'.MEMBERPICS_PATH.$data['memberinfo']['personal']['photo']);
+
+				$this->session->set_flashdata('memmsg', '<div class="alert alert-success">Profile successfully updated.</div>');
+
+				redirect('admin/members/view/'.$membership_id);
+			}
+		}
 
 		load_view_admin('members/editmember', $data, 'members_nav');
 	}
