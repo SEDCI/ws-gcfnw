@@ -337,8 +337,11 @@ $('#eventslist .eventitem img').on('click', function() {
 $('#eventmodal').on('hide.bs.modal', function() {
 	$('#eventmodal #eventimg').removeAttr('src');
 });
-
-
+/*
+$('#memberphoto').on('click', function() {
+	$('#memberpic').click();
+});
+*/
 function getPreviewedphotoindex() {
 	var pic = $('#previewimg').attr('src');
 
