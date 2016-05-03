@@ -626,7 +626,7 @@ for ($c = 0; $c < $cnt_edp; $c++):
                 <br />
                 <div class="row info-rows">
                     <div class="col-sm-12">
-                        <button type="submit" class="btn btn-lg btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </form>

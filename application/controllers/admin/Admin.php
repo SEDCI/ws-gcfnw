@@ -56,4 +56,51 @@ class Admin extends MY_Controller
 			$this->session->unset_userdata('adminuser');
 		}
 	}
+
+	public function changePassword()
+	{
+		$data['title'] = 'Change Password';
+		$data['actlnk_changepass'] = ' class="gcf-active"';
+		$data['adminmsg'] = '';
+
+		$this->form_validation->set_rules('opass', 'Current Password', 'trim|required|callback_checkOldPassword');
+		$this->form_validation->set_rules('npass', 'New Password', 'trim|required|min_length[8]');
+		$this->form_validation->set_rules('cpass', 'Confirm Password', 'trim|required|matches[npass]');
+
+		if ($this->input->post()) {
+			if ($this->form_validation->run() == true) {
+				$admin_data['password'] = password_hash($this->input->post('npass'), PASSWORD_BCRYPT, array('salt' => GCF_SALT));
+
+				$options = array(
+					'where' => array('username' => $this->session->userdata('adminuser'))
+				);
+
+				$this->admin_model->updateAdmin($admin_data, $options);
+
+				//$this->session->set_flashdata('adminmsg', '<div class="alert alert-success">You have successfully changed your password.</div>');
+				$data['adminmsg'] = '<div class="alert alert-success">You have successfully changed your password.</div>';
+			} else {
+				$data['adminmsg'] = '<div class="alert alert-danger">'.validation_errors().'</div>';
+			}
+		}
+
+		load_view_admin('changepass', $data, 'admin_nav');
+	}
+
+	public function checkOldPassword($opass)
+	{
+		$criteria = array(
+			'username' => $this->session->userdata('adminuser'),
+			'password' => password_hash($opass, PASSWORD_BCRYPT, array('salt' => GCF_SALT))
+		);
+
+		$admin = $this->admin_model->checkAdmin($criteria);
+
+		if ($admin > 0):
+			return true;
+		endif;
+
+		$this->form_validation->set_message('checkOldPassword', 'The %s field is invalid.');
+		return false;
+	}
 }

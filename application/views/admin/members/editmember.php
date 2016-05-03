@@ -768,7 +768,7 @@
                 <br />
                 <div class="row info-rows">
                     <div class="col-sm-12">
-                        <button type="submit" class="btn btn-lg btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </div>
                 </div>
             </form>

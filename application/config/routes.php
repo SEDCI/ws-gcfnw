@@ -101,6 +101,7 @@ $route['admin'] = 'admin/admin/showLogin';
 $route['admin/login'] = 'admin/admin/showLogin';
 $route['admin/auth'] = 'admin/admin/login';
 $route['admin/dashboard'] = 'admin/dashboard/showIndex';
+$route['admin/changepassword'] = 'admin/admin/changePassword';
 $route['admin/logout'] = 'admin/admin/logout';
 
 $route['admin/members'] = 'admin/members/showMembers';
