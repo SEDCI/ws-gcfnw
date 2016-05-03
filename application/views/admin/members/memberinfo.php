@@ -13,19 +13,26 @@
             <hr />
             <?php echo $memmsg; ?>
             <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-inline">
-                        <div><label>Date received by Edifying Ministry:</label></div><div><?php echo nice_date($memberinfo['personal']['date_received'], 'Y-m-d'); ?></div>
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-inline">
+                                        <div><label>Date received by Edifying Ministry:</label></div><div><?php echo nice_date($memberinfo['personal']['date_received'], 'Y-m-d'); ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <span class="glyphicon <?php echo ($memberinfo['personal']['application_type'] == 'T') ? 'glyphicon-check' : 'glyphicon-unchecked'; ?>"></span> <label>transferee</label>
+                                </div>
+                                <div class="col-sm-2">
+                                    <span class="glyphicon <?php echo ($memberinfo['personal']['application_type'] == 'M') ? 'glyphicon-check' : 'glyphicon-unchecked'; ?>"></span> <label>for membership</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-2">
-                    <span class="glyphicon <?php echo ($memberinfo['personal']['application_type'] == 'T') ? 'glyphicon-check' : 'glyphicon-unchecked'; ?>"></span> <label>transferee</label>
-                </div>
-                <div class="col-sm-2">
-                    <span class="glyphicon <?php echo ($memberinfo['personal']['application_type'] == 'M') ? 'glyphicon-check' : 'glyphicon-unchecked'; ?>"></span> <label>for membership</label>
-                </div>
             </div>
-            <br />
             <div class="row">
                 <div class="col-sm-12">
                     <div class="panel panel-default">

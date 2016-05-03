@@ -13,23 +13,33 @@
                 <input type="hidden" name="memberid" value="<?php echo $membership_id; ?>">
                 <input type="hidden" name="personalid" value="<?php echo $memberinfo['personal']['id']; ?>">
                 <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-inline">
-                            Date received by Edifying Ministry: <input type="text" class="form-control datepicker" id="datereceived" name="datereceived" value="<?php echo nice_date($memberinfo['personal']['date_received'], 'Y-m-d'); ?>">
+                    <div class="col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-inline">
+                                            Date received by Edifying Ministry: <input type="text" class="form-control datepicker" id="datereceived" name="datereceived" value="<?php echo nice_date($memberinfo['personal']['date_received'], 'Y-m-d'); ?>">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label>
+                                            <input type="radio" name="applicationtype" value="T"<?php echo ($memberinfo['personal']['application_type'] == 'T') ? ' checked="checked"' : ''; ?>> transferee
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label>
+                                            <input type="radio" name="applicationtype" value="M"<?php echo ($memberinfo['personal']['application_type'] == 'M') ? ' checked="checked"' : ''; ?>> for membership
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-2">
+                                         <?php echo form_error('applicationtype', '<span class="form-error">- ', '</span>'); ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-2">
-                        <label>
-                            <input type="radio" name="applicationtype" value="T"<?php echo ($memberinfo['personal']['application_type'] == 'T') ? ' checked="checked"' : ''; ?>> transferee
-                        </label>
-                    </div>
-                    <div class="col-sm-2">
-                        <label>
-                            <input type="radio" name="applicationtype" value="M"<?php echo ($memberinfo['personal']['application_type'] == 'M') ? ' checked="checked"' : ''; ?>> for membership
-                        </label>
-                    </div>
                 </div>
-                <br />
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="panel panel-default">
@@ -44,10 +54,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-2">
-                                        <img class="img img-thumbnail" id="memberphoto" src="<?php echo $memberinfo['personal']['pic']; ?>" title="Click to Change Photo" width="150">
+                                        <img class="img img-thumbnail" id="memberphoto" src="<?php echo $memberinfo['personal']['pic']; ?>" width="150">
                                     </div>
                                     <div class="col-xs-10">
-                                        <label for="memberpic" class="control-label">Change Photo:</label>
+                                        <label for="memberpic" class="control-label">Change Photo:</label> <?php echo (!empty($photo_error) ? $photo_error : ''); ?>
                                         <input type="file" id="memberpic" name="memberpic">
                                     </div>
                                 </div>

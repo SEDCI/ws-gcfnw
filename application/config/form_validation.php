@@ -29,7 +29,7 @@ $config = array(
 			),
 			'errors' => array(
 				'required' => 'required',
-				'valid_gender' => 'invalid'
+				'valid_category' => 'invalid'
 			)
 		),
 		// PERSONAL INFORMATION
