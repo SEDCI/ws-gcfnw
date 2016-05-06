@@ -1,12 +1,13 @@
 <?php
 class Members extends CI_Controller
-{
+{zxvxzcvxcvx
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->helper('form');
 		$this->load->helper('date');
 		$this->load->helper('loadview');
+		$this->load->helper('visitcounter');
 		$this->load->library('form_validation');
 		$this->load->library('email');
 		$this->load->model('members_model');

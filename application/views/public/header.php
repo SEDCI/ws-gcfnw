@@ -211,3 +211,5 @@
         <!-- /.container-fluid -->
 
     </nav>
+
+<?php count_visit(); ?>

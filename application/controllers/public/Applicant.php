@@ -7,6 +7,7 @@ class Applicant extends CI_Controller
 		$this->load->helper('form');
 		$this->load->helper('date');
 		$this->load->helper('loadview');
+		$this->load->helper('visitcounter');
 		$this->load->library('form_validation');
 		$this->load->library('email');
 		$this->load->model('applicants_model');
@@ -92,10 +93,10 @@ class Applicant extends CI_Controller
 
 	public function emailSignupnotif()
 	{
-		$this->email->from('signup@gcfnw.org', 'GCF Application Page');
-		$this->email->to('rocky.borlaza@southeasterndatacenter.com');
+		$this->email->from('no-reply@gcfnw.org', 'GCF Application Page');
+		$this->email->to('admin@gcfnw.org');
 		$this->email->subject('New Application for Membership');
-		$this->email->message("There's a new application for membership via website.\nAttached herewith is the application form for reviewing.\n\n- GCF Website");
+		$this->email->message("There's a new application for membership via website.\nKindly log in on the site's administration panel to review the application.\n\n- GCF Website");
 		$this->email->send();
 	}
 

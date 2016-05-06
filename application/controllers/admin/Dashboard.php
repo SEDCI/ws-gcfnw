@@ -7,17 +7,26 @@ class Dashboard extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->helper('loadview');
+		$this->load->helper('visitcounter');
+		$this->load->model('members_model');
 
-		$this->dashboard_constants = array(
+		/*$this->dashboard_constants = array(
 			'title' => 'Dashboard',
 			'adminuser' => $this->session->userdata('adminuser')
-		);
+		);*/
 	}
 
 	public function showIndex()
 	{
-		$data['title'] = 'Dashboard';
+		$members = $this->members_model->getMemberscount(array('status' => 'A'));
+		$applicants = $this->members_model->getMemberscount(array('status' => 'N'));
 
-		load_view_admin('dashboard/index', $this->dashboard_constants, 'dashboard_nav');
+		$data['title'] = 'Dashboard';
+		$data['members_count'] = $members['total_count'];
+		$data['applicants_count'] = $applicants['total_count'];
+		$data['total_visits'] = get_total_visits();
+		$data['today_visits'] = get_today_visits();
+
+		load_view_admin('dashboard/index', $data, 'dashboard_nav');
 	}
 }

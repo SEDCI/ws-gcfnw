@@ -6,6 +6,7 @@ class Pages extends CI_Controller
 		parent::__construct();
 		$this->load->helper('loadview');
 		$this->load->helper('date');
+		$this->load->helper('visitcounter');
 		$this->load->model('pastorcorner_model');
 	}
 
@@ -169,7 +170,6 @@ class Pages extends CI_Controller
 		$message = $_POST['message'];
 
 		$to = 'admin@gcfnw.org';
-		//$to = 'rocky.borlaza@southeasterndatacenter.com';
 		$email_subject = "Website Contact Form:  $name";
 		$email_body = "You have received a new message from your website contact form.\n\n"."Here are the details:\n\nName: $name\n\nEmail: $email_address\n\nPhone: $phone\n\nMessage:\n$message";
 		$headers = "From: no-reply@gcfnw.org\n";
@@ -245,12 +245,9 @@ class Pages extends CI_Controller
 		$this->load->library('email');
 
 		$send_to = array(
-			/*'anthony.arceo@gcfnw.org',
+			'anthony.arceo@gcfnw.org',
 			'gerry.agoncillo@gcfnw.org',
-			'jun.raynes@gcfnw.org'*/
-			'rocky.borlaza@southeasterndatacenter.com',
-			'rocky_borlaza@yahoo.com',
-			'rdborlaza@gmail.com'
+			'jun.raynes@gcfnw.org'
 		);
 
 		$name = $this->session->userdata('firstname').' '.$this->session->userdata('lastname');

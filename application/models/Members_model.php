@@ -22,6 +22,17 @@ class Members_model extends CI_Model
 		return $result->result_array();
 	}
 
+	public function getMemberscount($criteria = '')
+	{
+		if (!empty($criteria)) {
+			$this->db->where($criteria);
+		}
+
+		$this->db->select("COUNT(*) as total_count");
+		$result = $this->db->get('m_personal');
+		return $result->row_array();
+	}
+
 	public function getMemberinfo($criteria)
 	{
 		if (!empty($criteria)) {

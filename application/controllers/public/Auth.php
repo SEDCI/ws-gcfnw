@@ -7,6 +7,7 @@ class Auth extends CI_Controller
 		$this->load->helper('form');
 		$this->load->helper('date');
 		$this->load->helper('loadview');
+		$this->load->helper('visitcounter');
 		$this->load->library('form_validation');
 		$this->load->library('email');
 		$this->load->model('users_model');
