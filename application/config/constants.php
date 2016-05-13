@@ -95,4 +95,4 @@ define('GALLERY_PATH', 'img/gallery/');
 define('EVENTFILES_PATH', 'files/events/');
 define('MEMBERPICS_PATH', 'img/members/');
 define('DEFAULT_MEMBER_PHOTO', 'img/no-user-image.gif');
-
+define('COUNTER_DIRECTORY', APPPATH.'logs/counter/');

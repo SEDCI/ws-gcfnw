@@ -211,6 +211,10 @@
 	outline: none;
 }
 
+.overview {
+	padding-top: 51px;
+}
+
 .ov-box {
 	height: 82px;
 	border: 1px solid #DDDDDD;
@@ -252,4 +256,18 @@
 
 .ov-box .ov-box-red {
 	background-color: #008840;
+}
+
+.overview .panel {
+	box-shadow: 1px 2px 3px #EEEEEE;
+}
+
+.overview .shortcuts a {
+	width: 100%;
+	padding: 15px;
+	box-shadow: 1px 5px 5px #EEEEEE;
+}
+
+.overview .shortcuts .glyphicon {
+	font-size: 32px;
 }

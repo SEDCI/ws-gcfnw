@@ -26,7 +26,8 @@ class Dashboard extends MY_Controller
 		$data['applicants_count'] = $applicants['total_count'];
 		$data['total_visits'] = get_total_visits();
 		$data['today_visits'] = get_today_visits();
+		$data['monthly_visits'] = get_monthly_visits();;
 
-		load_view_admin('dashboard/index', $data, 'dashboard_nav');
+		load_view_admin('dashboard/index', $data);
 	}
 }

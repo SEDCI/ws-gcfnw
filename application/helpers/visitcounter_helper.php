@@ -63,26 +63,27 @@ if ( ! function_exists('count_visit'))
 	{
 		$CI =& get_instance();
 
-		if ($CI->session->userdata('hasVisited') == '') {
+		$ua = $CI->input->server('HTTP_USER_AGENT');
+
+		if ($CI->session->userdata('hasVisited') == '' && !empty($ua) && (strpos($ua, 'ISPConfig') === false)) {
 			$CI->load->helper('file');
 
-			$counter_dir = APPPATH.'logs/counter/';
 			$totalcount = 0;
 
-			if (!file_exists($counter_dir)) {
-				mkdir($counter_dir);
+			if (!file_exists(COUNTER_DIRECTORY)) {
+				mkdir(COUNTER_DIRECTORY);
 			}
 
-			if (file_exists($counter_dir.'totalcount')) {
-				$totalcount = trim(read_file($counter_dir.'totalcount'));
+			if (file_exists(COUNTER_DIRECTORY.'totalcount')) {
+				$totalcount = trim(read_file(COUNTER_DIRECTORY.'totalcount'));
 			}
 
 			$totalcount++;
 
-			write_file($counter_dir.'totalcount', $totalcount);
+			write_file(COUNTER_DIRECTORY.'totalcount', $totalcount);
 
-			if (file_exists($counter_dir.date('Ym'))) {
-				$monthcountlist = trim(read_file($counter_dir.date('Ym')));
+			if (file_exists(COUNTER_DIRECTORY.date('Ym'))) {
+				$monthcountlist = trim(read_file(COUNTER_DIRECTORY.date('Ym')));
 				$dailycount_arr = explode("\r\n", $monthcountlist);
 				$findcurdate = preg_grep("/".date('Ymd')."/", $dailycount_arr);
 
@@ -103,7 +104,9 @@ if ( ! function_exists('count_visit'))
 				$monthcountlist = date('Ymd').' 1';
 			}
 
-			write_file($counter_dir.date('Ym'), $monthcountlist);
+			write_file(COUNTER_DIRECTORY.date('Ym'), $monthcountlist);
+
+			$CI->session->set_userdata('hasVisited', 'y');
 		}
 	}
 }
@@ -116,7 +119,7 @@ if ( ! function_exists('get_total_visits'))
 	 * Fetches the total number of visits.
 	 *
 	 * @param	none
-	 * @return	none
+	 * @return	int
 	 */
 	function get_total_visits()
 	{
@@ -124,11 +127,10 @@ if ( ! function_exists('get_total_visits'))
 
 		$CI->load->helper('file');
 
-		$counter_dir = APPPATH.'logs/counter/';
 		$totalcount = 0;
 
-		if (file_exists($counter_dir.'totalcount')) {
-			$totalcount = trim(read_file($counter_dir.'totalcount'));
+		if (file_exists(COUNTER_DIRECTORY.'totalcount')) {
+			$totalcount = trim(read_file(COUNTER_DIRECTORY.'totalcount'));
 		}
 
 		return $totalcount;
@@ -143,7 +145,7 @@ if ( ! function_exists('get_today_visits'))
 	 * Fetches the total number of visits for the day.
 	 *
 	 * @param	none
-	 * @return	none
+	 * @return	int
 	 */
 	function get_today_visits()
 	{
@@ -151,11 +153,10 @@ if ( ! function_exists('get_today_visits'))
 
 		$CI->load->helper('file');
 
-		$counter_dir = APPPATH.'logs/counter/';
 		$dailycount = 0;
 
-		if (file_exists($counter_dir.date('Ym'))) {
-			$content = trim(read_file($counter_dir.date('Ym')));
+		if (file_exists(COUNTER_DIRECTORY.date('Ym'))) {
+			$content = trim(read_file(COUNTER_DIRECTORY.date('Ym')));
 			$dailycount_arr = explode("\r\n", $content);
 			$findcurdate = preg_grep("/".date('Ymd')."/", $dailycount_arr);
 
@@ -169,5 +170,55 @@ if ( ! function_exists('get_today_visits'))
 		}
 
 		return $dailycount;
+	}
+}
+
+if ( ! function_exists('get_monthly_visits'))
+{
+	/**
+	 * Get Monthly Visits
+	 *
+	 * Fetches the total number of visits per month.
+	 *
+	 * @param	int
+	 * @return	array
+	 */
+	function get_monthly_visits($past_months_count = 12)
+	{
+		$CI =& get_instance();
+
+		$CI->load->helper('file');
+		$CI->load->helper('date');
+
+		$dailycount = 0;
+
+		$tmp_date = date('Y-m-d');
+		$tmp_timestamp = strtotime($tmp_date);
+		$tmp_file = date('Ym');
+
+		for ($i = 0; $i < $past_months_count; $i++) {
+			$monthly_sum = 0;
+
+			if (file_exists(COUNTER_DIRECTORY.$tmp_file)) {
+				$content = read_file(COUNTER_DIRECTORY.$tmp_file);
+				$daily_count_arr = explode("\r\n", $content);
+
+				foreach ($daily_count_arr as $daily_count) {
+					$count_data = explode(' ', trim($daily_count));
+					$monthly_sum += $count_data[1];
+				}
+			}
+
+			$months[] = date('M', $tmp_timestamp);
+			$counts[] = $monthly_sum;
+			$tmp_timestamp = strtotime('-1 month', strtotime($tmp_date));
+			$tmp_date = date('Y-m-d', $tmp_timestamp);
+			$tmp_file = date('Ym', $tmp_timestamp);
+		}
+
+		$monthly_count['months'] = array_reverse($months);
+		$monthly_count['counts'] = array_reverse($counts);
+
+		return array_reverse($monthly_count);
 	}
 }
